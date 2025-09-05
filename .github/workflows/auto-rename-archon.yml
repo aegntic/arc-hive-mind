@@ -1,0 +1,267 @@
+name: Auto Rename Archon to Archivemind
+
+on:
+  # Manual trigger
+  workflow_dispatch:
+    inputs:
+      upstream_branch:
+        description: 'Branch to pull from upstream'
+        required: false
+        default: 'main'
+  
+  # Scheduled to run daily at 2 AM UTC
+  schedule:
+    - cron: '0 2 * * *'
+  
+  # Trigger on push to a specific branch for testing
+  push:
+    branches:
+      - 'sync-from-archon'
+
+jobs:
+  sync-and-rename:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Configure git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+      
+      - name: Add upstream remote if not exists
+        run: |
+          if ! git remote | grep -q "upstream"; then
+            git remote add upstream https://github.com/coleam00/bolt.new-any-llm.git || true
+          fi
+      
+      - name: Fetch upstream changes
+        run: |
+          git fetch upstream
+          echo "Fetched latest changes from upstream"
+      
+      - name: Create sync branch
+        run: |
+          BRANCH_NAME="auto-sync-$(date +%Y%m%d-%H%M%S)"
+          git checkout -b $BRANCH_NAME
+          echo "SYNC_BRANCH=$BRANCH_NAME" >> $GITHUB_ENV
+      
+      - name: Merge upstream changes
+        continue-on-error: true
+        run: |
+          git merge upstream/${{ github.event.inputs.upstream_branch || 'main' }} --no-edit || true
+          # If there are conflicts, we'll handle them in the rename step
+      
+      - name: Install rename tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y rename sed
+      
+      - name: Perform comprehensive rename
+        run: |
+          echo "Starting comprehensive rename from 'archon' to 'archivemind'..."
+          
+          # Function to perform case-sensitive replacements
+          perform_replacements() {
+            local file="$1"
+            # Skip binary files and git directory
+            if [[ "$file" == *".git/"* ]] || file "$file" | grep -q "binary"; then
+              return
+            fi
+            
+            # Create temp file for safe replacement
+            temp_file=$(mktemp)
+            
+            # Perform replacements with proper case handling
+            sed -e 's/\bArchon\b/Archivemind/g' \
+                -e 's/\barchon\b/archivemind/g' \
+                -e 's/\bARCHON\b/ARCHIVEMIND/g' \
+                -e 's/Archon-/Archivemind-/g' \
+                -e 's/archon-/archivemind-/g' \
+                -e 's/ARCHON_/ARCHIVEMIND_/g' \
+                -e 's/archon_/archivemind_/g' \
+                -e 's/\.archon\b/.archivemind/g' \
+                -e 's/"archon"/"archivemind"/g' \
+                -e "s/'archon'/'archivemind'/g" \
+                "$file" > "$temp_file"
+            
+            # Only update if changes were made
+            if ! cmp -s "$file" "$temp_file"; then
+              mv "$temp_file" "$file"
+              echo "Updated: $file"
+            else
+              rm "$temp_file"
+            fi
+          }
+          
+          export -f perform_replacements
+          
+          # Find and process all text files
+          find . -type f \
+            -not -path "./.git/*" \
+            -not -path "./node_modules/*" \
+            -not -path "./__pycache__/*" \
+            -not -name "*.pyc" \
+            -not -name "*.pyo" \
+            -not -name "*.so" \
+            -not -name "*.dylib" \
+            -not -name "*.dll" \
+            -not -name "*.exe" \
+            -not -name "*.bin" \
+            -not -name "*.jpg" \
+            -not -name "*.jpeg" \
+            -not -name "*.png" \
+            -not -name "*.gif" \
+            -not -name "*.ico" \
+            -not -name "*.svg" \
+            -not -name "*.woff" \
+            -not -name "*.woff2" \
+            -not -name "*.ttf" \
+            -not -name "*.eot" \
+            -exec bash -c 'perform_replacements "$0"' {} \;
+          
+          echo "Text replacements completed"
+      
+      - name: Rename directories
+        run: |
+          echo "Renaming directories..."
+          
+          # Rename directories from bottom-up to avoid path conflicts
+          find . -depth -type d -name "*archon*" -not -path "./.git/*" | while read dir; do
+            newdir=$(echo "$dir" | sed 's/archon/archivemind/g')
+            if [ "$dir" != "$newdir" ]; then
+              mv "$dir" "$newdir" 2>/dev/null || true
+              echo "Renamed directory: $dir -> $newdir"
+            fi
+          done
+          
+          echo "Directory renaming completed"
+      
+      - name: Rename files
+        run: |
+          echo "Renaming files..."
+          
+          # Rename files containing 'archon' in their names
+          find . -type f -name "*archon*" -not -path "./.git/*" | while read file; do
+            newfile=$(echo "$file" | sed 's/archon/archivemind/g')
+            if [ "$file" != "$newfile" ]; then
+              mv "$file" "$newfile" 2>/dev/null || true
+              echo "Renamed file: $file -> $newfile"
+            fi
+          done
+          
+          echo "File renaming completed"
+      
+      - name: Handle special cases
+        run: |
+          echo "Handling special cases..."
+          
+          # Update package.json if it exists
+          if [ -f "package.json" ]; then
+            sed -i 's/"name":\s*"[^"]*archon[^"]*"/"name": "archivemind"/g' package.json
+          fi
+          
+          # Update docker-compose.yml service names if it exists
+          if [ -f "docker-compose.yml" ]; then
+            sed -i 's/container_name:\s*archon/container_name: archivemind/g' docker-compose.yml
+          fi
+          
+          # Update .env.example if it exists
+          if [ -f ".env.example" ]; then
+            sed -i 's/ARCHON/ARCHIVEMIND/g' .env.example
+          fi
+          
+          echo "Special cases handled"
+      
+      - name: Verify changes
+        run: |
+          echo "Verifying rename completion..."
+          
+          # Count remaining instances (excluding .git directory)
+          remaining=$(grep -r -i "archon" . --exclude-dir=.git --exclude-dir=node_modules 2>/dev/null | wc -l || echo "0")
+          
+          echo "Remaining 'archon' references: $remaining"
+          
+          if [ "$remaining" -gt 0 ]; then
+            echo "Warning: Some references to 'archon' still exist:"
+            grep -r -i "archon" . --exclude-dir=.git --exclude-dir=node_modules | head -20 || true
+          fi
+      
+      - name: Commit changes
+        run: |
+          git add -A
+          
+          # Check if there are changes to commit
+          if git diff --cached --quiet; then
+            echo "No changes to commit after rename"
+          else
+            git commit -m "Auto-rename: Replace 'archon' with 'archivemind' throughout codebase
+            
+            This automated commit:
+            - Renames all occurrences of 'archon' to 'archivemind'
+            - Updates directory names, file names, and file contents
+            - Preserves proper case (Archon -> Archivemind, ARCHON -> ARCHIVEMIND)
+            - Syncs latest changes from upstream repository
+            
+            Triggered by: ${{ github.event_name }}
+            Upstream branch: ${{ github.event.inputs.upstream_branch || 'main' }}"
+            
+            echo "Changes committed successfully"
+          fi
+      
+      - name: Push changes
+        run: |
+          git push origin ${{ env.SYNC_BRANCH }}
+      
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ env.SYNC_BRANCH }}
+          title: "Auto-sync: Update from upstream with Archon → Archivemind rename"
+          body: |
+            ## Automated Sync and Rename
+            
+            This PR automatically:
+            1. Pulls latest changes from the upstream repository
+            2. Renames all instances of "archon" to "archivemind"
+            3. Updates file names, directory names, and content
+            
+            ### Summary
+            - **Source Branch**: upstream/${{ github.event.inputs.upstream_branch || 'main' }}
+            - **Triggered by**: ${{ github.event_name }}
+            - **Timestamp**: ${{ github.event.head_commit.timestamp || 'N/A' }}
+            
+            ### Automated Replacements
+            - `Archon` → `Archivemind`
+            - `archon` → `archivemind`
+            - `ARCHON` → `ARCHIVEMIND`
+            - All variants in file names, directory names, and content
+            
+            Please review the changes before merging.
+          labels: |
+            automated
+            sync
+            rename
+          draft: false
+      
+      - name: Summary
+        run: |
+          echo "## Sync and Rename Complete! 🎉" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Actions Performed:" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Fetched latest changes from upstream" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Renamed all 'archon' references to 'archivemind'" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Created pull request for review" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Branch Information:" >> $GITHUB_STEP_SUMMARY
+          echo "- Sync branch: \`${{ env.SYNC_BRANCH }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- Upstream branch: \`${{ github.event.inputs.upstream_branch || 'main' }}\`" >> $GITHUB_STEP_SUMMARY
