@@ -237,7 +237,7 @@ async def update_source_info(
     try:
         # First, check if source already exists to preserve title
         existing_source = (
-            client.table("archon_sources").select("title").eq("source_id", source_id).execute()
+            client.table("archivemind_sources").select("title").eq("source_id", source_id).execute()
         )
 
         if existing_source.data:
@@ -280,7 +280,7 @@ async def update_source_info(
                 update_data["source_display_name"] = source_display_name
 
             result = (
-                client.table("archon_sources")
+                client.table("archivemind_sources")
                 .update(update_data)
                 .eq("source_id", source_id)
                 .execute()
@@ -344,7 +344,7 @@ async def update_source_info(
             if source_display_name:
                 upsert_data["source_display_name"] = source_display_name
 
-            client.table("archon_sources").upsert(upsert_data).execute()
+            client.table("archivemind_sources").upsert(upsert_data).execute()
             search_logger.info(f"Created/updated source {source_id} with title: {title}")
 
     except Exception as e:
@@ -369,7 +369,7 @@ class SourceManagementService:
             Tuple of (success, result_dict)
         """
         try:
-            response = self.supabase_client.table("archon_sources").select("*").execute()
+            response = self.supabase_client.table("archivemind_sources").select("*").execute()
 
             sources = []
             for row in response.data:
@@ -404,7 +404,7 @@ class SourceManagementService:
             try:
                 logger.info(f"Deleting from crawled_pages table for source_id: {source_id}")
                 pages_response = (
-                    self.supabase_client.table("archon_crawled_pages")
+                    self.supabase_client.table("archivemind_crawled_pages")
                     .delete()
                     .eq("source_id", source_id)
                     .execute()
@@ -419,7 +419,7 @@ class SourceManagementService:
             try:
                 logger.info(f"Deleting from code_examples table for source_id: {source_id}")
                 code_response = (
-                    self.supabase_client.table("archon_code_examples")
+                    self.supabase_client.table("archivemind_code_examples")
                     .delete()
                     .eq("source_id", source_id)
                     .execute()
@@ -434,7 +434,7 @@ class SourceManagementService:
             try:
                 logger.info(f"Deleting from sources table for source_id: {source_id}")
                 source_response = (
-                    self.supabase_client.table("archon_sources")
+                    self.supabase_client.table("archivemind_sources")
                     .delete()
                     .eq("source_id", source_id)
                     .execute()
@@ -494,7 +494,7 @@ class SourceManagementService:
             if knowledge_type is not None or tags is not None:
                 # Get existing metadata
                 existing = (
-                    self.supabase_client.table("archon_sources")
+                    self.supabase_client.table("archivemind_sources")
                     .select("metadata")
                     .eq("source_id", source_id)
                     .execute()
@@ -513,7 +513,7 @@ class SourceManagementService:
 
             # Update the source
             response = (
-                self.supabase_client.table("archon_sources")
+                self.supabase_client.table("archivemind_sources")
                 .update(update_data)
                 .eq("source_id", source_id)
                 .execute()
@@ -595,7 +595,7 @@ class SourceManagementService:
         try:
             # Get source metadata
             source_response = (
-                self.supabase_client.table("archon_sources")
+                self.supabase_client.table("archivemind_sources")
                 .select("*")
                 .eq("source_id", source_id)
                 .execute()
@@ -608,7 +608,7 @@ class SourceManagementService:
 
             # Get page count
             pages_response = (
-                self.supabase_client.table("archon_crawled_pages")
+                self.supabase_client.table("archivemind_crawled_pages")
                 .select("id")
                 .eq("source_id", source_id)
                 .execute()
@@ -617,7 +617,7 @@ class SourceManagementService:
 
             # Get code example count
             code_response = (
-                self.supabase_client.table("archon_code_examples")
+                self.supabase_client.table("archivemind_code_examples")
                 .select("id")
                 .eq("source_id", source_id)
                 .execute()
@@ -645,7 +645,7 @@ class SourceManagementService:
             Tuple of (success, result_dict)
         """
         try:
-            query = self.supabase_client.table("archon_sources").select("*")
+            query = self.supabase_client.table("archivemind_sources").select("*")
 
             if knowledge_type:
                 # Filter by metadata->knowledge_type

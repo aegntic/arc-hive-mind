@@ -1,5 +1,5 @@
 """
-Simple task management tools for Archon MCP Server.
+Simple task management tools for ArchiveMind MCP Server.
 
 Provides separate, focused tools for each task operation.
 Mirrors the functionality of the original manage_task tool but with individual tools.
@@ -44,7 +44,7 @@ def register_task_tools(mcp: FastMCP):
             description: Detailed task description with acceptance criteria
             assignee: Who will work on this task. Options:
                 - "User": For manual tasks
-                - "Archon": For AI-driven tasks
+                - "ArchiveMind": For AI-driven tasks
                 - "AI IDE Agent": For code implementation
                 - "prp-executor": For PRP coordination
                 - "prp-validator": For testing/validation

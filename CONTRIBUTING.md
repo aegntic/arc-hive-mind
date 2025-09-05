@@ -1,16 +1,16 @@
-# Contributing to Archon
+# Contributing to Archivemind
 
-Help us build the definitive knowledge and task management engine for AI coding assistants! This guide shows you how to contribute new features, bug fixes, and improvements to the Archon platform.
+Help us build the definitive knowledge and task management engine for AI coding assistants! This guide shows you how to contribute new features, bug fixes, and improvements to the Archivemind platform.
 
-## 🎯 What is Archon?
+## 🎯 What is Archivemind?
 
-Archon is a **microservices-based engine** that provides AI coding assistants with access to your documentation, project knowledge, and task management through the Model Context Protocol (MCP). The platform consists of four main services that work together to deliver comprehensive knowledge management and project automation.
+Archivemind is a **microservices-based engine** that provides AI coding assistants with access to your documentation, project knowledge, and task management through the Model Context Protocol (MCP). The platform consists of four main services that work together to deliver comprehensive knowledge management and project automation.
 
 ## 🏗️ Architecture Overview
 
 ### Microservices Structure
 
-Archon uses true microservices architecture with clear separation of concerns:
+Archivemind uses true microservices architecture with clear separation of concerns:
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
@@ -36,7 +36,7 @@ Archon uses true microservices architecture with clear separation of concerns:
 
 | Service        | Location             | Purpose                      | Key Features                                                               |
 | -------------- | -------------------- | ---------------------------- | -------------------------------------------------------------------------- |
-| **Frontend**   | `archon-ui-main/`    | Web interface and dashboard  | React, TypeScript, TailwindCSS, Socket.IO client                           |
+| **Frontend**   | `Archivemind-ui-main/`    | Web interface and dashboard  | React, TypeScript, TailwindCSS, Socket.IO client                           |
 | **Server**     | `python/src/server/` | Core business logic and APIs | FastAPI, service layer, Socket.IO broadcasts, all LLM/embedding operations |
 | **MCP Server** | `python/src/mcp/`    | MCP protocol interface       | Lightweight HTTP wrapper, 14 MCP tools, session management                 |
 | **Agents**     | `python/src/agents/` | PydanticAI agent hosting     | Document and RAG agents, streaming responses                               |
@@ -89,11 +89,11 @@ After forking the repository, you'll need to:
 
 ## 👑 Important Standards for Contributing
 
-There are a few very important rules that we ask you follow when contributing to Archon.
+There are a few very important rules that we ask you follow when contributing to Archivemind.
 Some things like testing are covered more later in this document but there are a few
 very important specifics to call out here.
 
-**1. Check the list of PRs** to make sure you aren't about to fix or implement something that's already been done! Also be sure to check the [Archon Kanban board](https://github.com/users/coleam00/projects/1) where the maintainers are manage issues/features.
+**1. Check the list of PRs** to make sure you aren't about to fix or implement something that's already been done! Also be sure to check the [Archivemind Kanban board](https://github.com/users/coleam00/projects/1) where the maintainers are manage issues/features.
 
 **2. Try to keep the changes to less than 2,000 lines of code.** The more granular the PR, the better! If your changes must be larger, it's very important to go into extra detail in your PR and explain why the larger changes are necessary.
 
@@ -106,7 +106,7 @@ very important specifics to call out here.
    - sitemap.xml: https://mem0.ai/sitemap.xml
    - Normal URL: https://docs.anthropic.com/en/docs/claude-code/overview
 
-Make sure the crawling completes end to end, the code examples exist, and the Archon MCP can be used to successfully search through the documentation.
+Make sure the crawling completes end to end, the code examples exist, and the Archivemind MCP can be used to successfully search through the documentation.
 
 **6. If your code changes touch the project/task management in any way**, please test all the CRUD (Create, Read, Update, Delete) operations on both projects and tasks. Generally you will:
    - Create a new project
@@ -114,9 +114,9 @@ Make sure the crawling completes end to end, the code examples exist, and the Ar
    - Move the tasks around the kanban board
    - Edit descriptions
 
-Test these things using both the UI and the MCP server. This process will be similar if your code changes touch the docs part of Archon too.
+Test these things using both the UI and the MCP server. This process will be similar if your code changes touch the docs part of Archivemind too.
 
-**7. If your code changes touch the MCP server instructions or anything else more high level** that could affect how AI coding assistants use the Archon MCP, please retest by creating a simple project from scratch that leverages Archon for RAG, task management, etc.
+**7. If your code changes touch the MCP server instructions or anything else more high level** that could affect how AI coding assistants use the Archivemind MCP, please retest by creating a simple project from scratch that leverages Archivemind for RAG, task management, etc.
 
 ## 🔄 Contribution Process
 
@@ -143,28 +143,28 @@ Test these things using both the UI and the MCP server. This process will be sim
 ### 2. Development Process
 
 1. **Fork the Repository**
-   - Go to https://github.com/coleam00/archon
+   - Go to https://github.com/coleam00/Archivemind
    - Click the "Fork" button in the top right corner
    - This creates your own copy of the repository
 
    ```bash
    # Clone your fork (replace 'your-username' with your GitHub username)
-   git clone https://github.com/your-username/archon.git
-   cd archon
+   git clone https://github.com/your-username/Archivemind.git
+   cd Archivemind
 
    # Add upstream remote to sync with main repository later
-   git remote add upstream https://github.com/coleam00/archon.git
+   git remote add upstream https://github.com/coleam00/Archivemind.git
    ```
 
 2. **🤖 AI Coding Assistant Setup**
 
-   **IMPORTANT**: If you're using AI coding assistants to help contribute to Archon, set up our global rules for optimal results.
+   **IMPORTANT**: If you're using AI coding assistants to help contribute to Archivemind, set up our global rules for optimal results.
    - **Claude Code**: ✅ Already configured! The `CLAUDE.md` file is automatically used
    - **Cursor**: Copy `CLAUDE.md` content to a new `.cursorrules` file in the project root
    - **Windsurf**: Copy `CLAUDE.md` content to a new `.windsurfrules` file in the project root
    - **Other assistants**: Copy `CLAUDE.md` content to your assistant's global rules/context file
 
-   These rules contain essential context about Archon's architecture, service patterns, MCP implementation, and development best practices. Using them will help your AI assistant follow our conventions and implement features correctly.
+   These rules contain essential context about Archivemind's architecture, service patterns, MCP implementation, and development best practices. Using them will help your AI assistant follow our conventions and implement features correctly.
 
 3. **Create Feature Branch**
 
@@ -199,7 +199,7 @@ Test these things using both the UI and the MCP server. This process will be sim
    ```
 
 2. **Create Pull Request via GitHub UI**
-   - Go to your fork on GitHub (https://github.com/your-username/archon)
+   - Go to your fork on GitHub (https://github.com/your-username/Archivemind)
    - Click "Contribute" then "Open pull request"
    - GitHub will automatically detect your branch and show a comparison
    - The PR template will be automatically filled in the description
@@ -224,7 +224,7 @@ Test these things using both the UI and the MCP server. This process will be sim
    
    # Or manually
    cd python && python -m pytest       # Backend tests
-   cd archon-ui-main && npm run test   # Frontend tests
+   cd Archivemind-ui-main && npm run test   # Frontend tests
 
    # Full integration test
    docker compose --profile full up --build -d
@@ -271,10 +271,10 @@ Test these things using both the UI and the MCP server. This process will be sim
 
 **Key locations:**
 
-- **Components**: `archon-ui-main/src/components/` - Reusable UI components organized by feature
-- **Pages**: `archon-ui-main/src/pages/` - Main application routes
-- **Services**: `archon-ui-main/src/services/` - API communication and business logic
-- **Contexts**: `archon-ui-main/src/contexts/` - React context providers for global state
+- **Components**: `Archivemind-ui-main/src/components/` - Reusable UI components organized by feature
+- **Pages**: `Archivemind-ui-main/src/pages/` - Main application routes
+- **Services**: `Archivemind-ui-main/src/services/` - API communication and business logic
+- **Contexts**: `Archivemind-ui-main/src/contexts/` - React context providers for global state
 
 **Development patterns:**
 
@@ -356,10 +356,10 @@ Test these things using both the UI and the MCP server. This process will be sim
 
    ```bash
    # Create in appropriate category
-   archon-ui-main/src/components/your-category/YourComponent.tsx
+   Archivemind-ui-main/src/components/your-category/YourComponent.tsx
 
    # Add to appropriate page or parent component
-   archon-ui-main/src/pages/YourPage.tsx
+   Archivemind-ui-main/src/pages/YourPage.tsx
    ```
 
 2. **Testing Your Changes**
@@ -369,7 +369,7 @@ Test these things using both the UI and the MCP server. This process will be sim
    make test-fe
    
    # Or manually
-   cd archon-ui-main && npm run test
+   cd Archivemind-ui-main && npm run test
 
    # Run with coverage
    npm run test:coverage
@@ -384,7 +384,7 @@ Test these things using both the UI and the MCP server. This process will be sim
    make dev  # Backend in Docker, frontend local
    
    # Or manually for faster iteration
-   cd archon-ui-main && npm run dev
+   cd Archivemind-ui-main && npm run dev
    # Still connects to Docker backend services
    ```
 
@@ -504,4 +504,4 @@ Contributors receive:
 
 ---
 
-**Ready to contribute?** Start by exploring the codebase, reading the architecture documentation, and finding an area that interests you. Every contribution makes Archon better for the entire AI development community.
+**Ready to contribute?** Start by exploring the codebase, reading the architecture documentation, and finding an area that interests you. Every contribution makes Archivemind better for the entire AI development community.

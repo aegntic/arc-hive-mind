@@ -1,5 +1,5 @@
 """
-MCP API endpoints for Archon
+MCP API endpoints for ArchiveMind
 
 Handles:
 - MCP server lifecycle (start/stop/status)
@@ -67,13 +67,13 @@ class MCPServerManager:
 
         try:
             # Simple: Just look for the fixed container name
-            container = self.docker_client.containers.get("archon-mcp")
-            self.container_name = "archon-mcp"
+            container = self.docker_client.containers.get("archivemind-mcp")
+            self.container_name = "archivemind-mcp"
             mcp_logger.info("Found MCP container")
             return container
         except NotFound:
             mcp_logger.warning("MCP container not found - is it running?")
-            self.container_name = "archon-mcp"
+            self.container_name = "archivemind-mcp"
             return None
 
     def _initialize_docker_client(self):
@@ -169,7 +169,7 @@ class MCPServerManager:
                 return {
                     "success": False,
                     "status": "not_found",
-                    "message": f"MCP container {self.container_name} not found. Run docker-compose up -d archon-mcp",
+                    "message": f"MCP container {self.container_name} not found. Run docker-compose up -d archivemind-mcp",
                 }
 
             if container_status == "running":
@@ -571,7 +571,7 @@ async def get_mcp_config():
             # Get actual MCP port from environment or use default
             import os
 
-            mcp_port = int(os.getenv("ARCHON_MCP_PORT", "8051"))
+            mcp_port = int(os.getenv("ARCHIVEMIND_MCP_PORT", "8051"))
 
             # Configuration for SSE-only mode with actual port
             config = {

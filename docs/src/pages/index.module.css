@@ -271,7 +271,7 @@
   overflow-x: auto;
 }
 
-.archonDiagram {
+.ArchivemindDiagram {
   padding: 2rem 0 1rem 0;
 }
 
@@ -315,7 +315,7 @@
   filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
 }
 
-.claudeIcon, .archonLogo {
+.claudeIcon, .ArchivemindLogo {
   width: 50px;
   height: 50px;
   filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
@@ -442,8 +442,8 @@
   line-height: 1.2;
 }
 
-/* Archon Node Styling */
-.archonNode {
+/* Archivemind Node Styling */
+.ArchivemindNode {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -459,7 +459,7 @@
   overflow: hidden;
 }
 
-.archonNode::before {
+.ArchivemindNode::before {
   content: '';
   position: absolute;
   top: 0;
@@ -475,13 +475,13 @@
   100% { left: 100%; }
 }
 
-.archonIcon {
+.ArchivemindIcon {
   width: 60px;
   height: 60px;
   margin-bottom: 12px;
 }
 
-.archonText h3 {
+.ArchivemindText h3 {
   color: #ffffff;
   font-size: 22px;
   font-weight: 700;
@@ -489,7 +489,7 @@
   text-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
 }
 
-.archonText p {
+.ArchivemindText p {
   color: #9ca3af;
   font-size: 0.9rem;
   margin: 0;
@@ -637,7 +637,7 @@
     max-width: 200px;
   }
   
-  .archonNode {
+  .ArchivemindNode {
     min-width: 150px;
     padding: 1.5rem;
   }
@@ -702,7 +702,7 @@
     font-size: 1.5rem;
   }
 
-  .claudeIcon, .archonLogo {
+  .claudeIcon, .ArchivemindLogo {
     width: 25px;
     height: 25px;
   }
@@ -715,16 +715,16 @@
     font-size: 1.2rem;
   }
 
-  .archonCore {
+  .ArchivemindCore {
     padding: 1rem;
     max-width: 200px;
   }
 
-  .archonCore h3 {
+  .ArchivemindCore h3 {
     font-size: 1.4rem;
   }
 
-  .archonIconBox {
+  .ArchivemindIconBox {
     width: 60px;
     height: 60px;
   }

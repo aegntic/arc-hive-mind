@@ -12,12 +12,12 @@ import Admonition from '@theme/Admonition';
 <div className="hero hero--primary">
   <div className="container">
     <h2 className="hero__subtitle">
-      Deploy Archon with Docker: **Production-ready microservices** with health checks, scaling, and monitoring
+      Deploy Archivemind with Docker: **Production-ready microservices** with health checks, scaling, and monitoring
     </h2>
   </div>
 </div>
 
-This guide covers deploying Archon's server architecture using Docker and Docker Compose, including configuration, scaling, and production best practices.
+This guide covers deploying Archivemind's server architecture using Docker and Docker Compose, including configuration, scaling, and production best practices.
 
 ## 📁 Project Structure
 
@@ -25,7 +25,7 @@ This guide covers deploying Archon's server architecture using Docker and Docker
 <summary>📂 **Click to expand complete project structure**</summary>
 
 ```
-archon/
+Archivemind/
 ├── python/                      # Python backend microservices
 │   ├── src/                     # Main application source
 │   │   ├── main.py              # FastAPI application entry point
@@ -85,7 +85,7 @@ archon/
 │   ├── Dockerfile.agents        # Agents service container
 │   ├── pyproject.toml           # Python project configuration
 │   └── uv.lock                  # Dependency lock file
-├── archon-ui-main/              # React frontend application
+├── Archivemind-ui-main/              # React frontend application
 │   ├── src/                     # Frontend source code
 │   │   ├── components/          # React components
 │   │   ├── pages/               # Page components
@@ -111,11 +111,11 @@ archon/
 ```yaml title="docker-compose.yml"
 services:
   # Server Service (FastAPI + Socket.IO)
-  archon-server:
+  Archivemind-server:
     build:
       context: ./python
       dockerfile: Dockerfile.server
-    container_name: Archon-Server
+    container_name: Archivemind-Server
     ports:
       - "8080:8080"
     environment:
@@ -137,11 +137,11 @@ services:
       start_period: 40s
 
   # MCP Server Service
-  archon-mcp:
+  Archivemind-mcp:
     build:
       context: ./python
       dockerfile: Dockerfile.mcp
-    container_name: archon-mcp
+    container_name: Archivemind-mcp
     ports:
       - "8051:8051"
     environment:
@@ -163,11 +163,11 @@ services:
       retries: 3
 
   # AI Agents Service
-  archon-agents:
+  Archivemind-agents:
     build:
       context: ./python
       dockerfile: Dockerfile.agents
-    container_name: archon-agents
+    container_name: Archivemind-agents
     ports:
       - "8052:8052"
     environment:
@@ -189,8 +189,8 @@ services:
 
   # Frontend
   frontend:
-    build: ./archon-ui-main
-    container_name: archon-frontend
+    build: ./Archivemind-ui-main
+    container_name: Archivemind-frontend
     ports:
       - "3737:5173"
     environment:
@@ -203,23 +203,23 @@ services:
       timeout: 10s
       retries: 3
     volumes:
-      - ./archon-ui-main/src:/app/src
-      - ./archon-ui-main/public:/app/public
+      - ./Archivemind-ui-main/src:/app/src
+      - ./Archivemind-ui-main/public:/app/public
     depends_on:
-      - archon-server
+      - Archivemind-server
 
   # Documentation
   docs:
     build:
       context: ./docs
       dockerfile: Dockerfile
-    container_name: archon-docs
+    container_name: Archivemind-docs
     ports:
       - "3838:80"
     networks:
       - app-network
     depends_on:
-      - archon-server
+      - Archivemind-server
       - frontend
 
 networks:
@@ -435,8 +435,8 @@ DOCS_PORT=3838
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/archon/archon.git
-   cd archon
+   git clone https://github.com/Archivemind/Archivemind.git
+   cd Archivemind
    ```
 
 2. **Set up environment variables**
@@ -488,7 +488,7 @@ Add resource limits for production deployments:
 
 ```yaml title="docker-compose.prod.yml"
 services:
-  archon-server:
+  Archivemind-server:
     deploy:
       resources:
         limits:
@@ -498,7 +498,7 @@ services:
           cpus: '1'
           memory: 2G
 
-  archon-mcp:
+  Archivemind-mcp:
     deploy:
       resources:
         limits:
@@ -508,7 +508,7 @@ services:
           cpus: '0.5'
           memory: 1G
 
-  archon-agents:
+  Archivemind-agents:
     deploy:
       resources:
         limits:
@@ -525,10 +525,10 @@ Each microservice can be scaled independently:
 
 ```bash
 # Scale the Agents service for more processing power
-docker compose up -d --scale archon-agents=3
+docker compose up -d --scale Archivemind-agents=3
 
 # Scale the Server service for more concurrent requests
-docker compose up -d --scale archon-server=2
+docker compose up -d --scale Archivemind-server=2
 
 # MCP typically doesn't need scaling as it's connection-based
 ```
@@ -546,7 +546,7 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
-      - archon-server
+      - Archivemind-server
     networks:
       - app-network
 ```
@@ -557,7 +557,7 @@ services:
 
 ```yaml title="docker-compose.secrets.yml"
 services:
-  archon-server:
+  Archivemind-server:
     environment:
       - OPENAI_API_KEY_FILE=/run/secrets/openai_key
     secrets:
@@ -594,7 +594,7 @@ For local development with hot reloading:
 
 ```yaml title="docker-compose.dev.yml"
 services:
-  archon-server:
+  Archivemind-server:
     command: ["python", "-m", "uvicorn", "src.main:socket_app", "--host", "0.0.0.0", "--port", "8080", "--reload"]
     volumes:
       - ./python/src:/app/src
@@ -622,10 +622,10 @@ All services include health checks that:
 
 ```bash
 # View service logs
-docker compose logs -f archon-server
+docker compose logs -f Archivemind-server
 
 # Check service health
-docker inspect archon-server | grep -A 5 Health
+docker inspect Archivemind-server | grep -A 5 Health
 
 # Monitor resource usage
 docker stats
@@ -642,7 +642,7 @@ docker compose top
 
 ```bash
 # Check logs for specific service
-docker compose logs archon-server
+docker compose logs Archivemind-server
 
 # Verify environment variables
 docker compose config
@@ -655,7 +655,7 @@ docker compose build --no-cache
 
 ```bash
 # Test database connectivity
-docker exec archon-server python -c "
+docker exec Archivemind-server python -c "
 from src.services.client_manager import get_supabase_client
 client = get_supabase_client()
 print('Database connected successfully')
@@ -683,8 +683,8 @@ MCP_PORT=8061
 docker compose -f docker-compose.yml -f docker-compose.prod.yml build
 
 # Push to registry
-docker tag archon-server:latest your-registry/archon-server:v1.0.0
-docker push your-registry/archon-server:v1.0.0
+docker tag Archivemind-server:latest your-registry/Archivemind-server:v1.0.0
+docker push your-registry/Archivemind-server:v1.0.0
 ```
 
 ### 2. Enable Swarm Mode
@@ -694,14 +694,14 @@ docker push your-registry/archon-server:v1.0.0
 docker swarm init
 
 # Deploy stack
-docker stack deploy -c docker-compose.yml archon
+docker stack deploy -c docker-compose.yml Archivemind
 ```
 
 ### 3. Configure Logging
 
 ```yaml
 services:
-  archon-server:
+  Archivemind-server:
     logging:
       driver: "json-file"
       options:

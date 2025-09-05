@@ -1,5 +1,5 @@
 """
-Crawling Service Module for Archon RAG
+Crawling Service Module for ArchiveMind RAG
 
 This module combines crawling functionality and orchestration.
 It handles web crawling operations including single page crawling,

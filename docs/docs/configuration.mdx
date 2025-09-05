@@ -1,6 +1,6 @@
 ---
 title: Configuration
-description: Essential configuration for Archon
+description: Essential configuration for Archivemind
 sidebar_position: 3
 ---
 
@@ -13,22 +13,22 @@ import Admonition from '@theme/Admonition';
 ## Docker Microservices Architecture
 
 <Admonition type="info" title="Container Communication">
-Archon uses a microservices architecture with three separate services. All services run in Docker containers and communicate via the `app-network` bridge network using service names, not localhost. Real-time features use Socket.IO for reliable real-time communication.
+Archivemind uses a microservices architecture with three separate services. All services run in Docker containers and communicate via the `app-network` bridge network using service names, not localhost. Real-time features use Socket.IO for reliable real-time communication.
 </Admonition>
 
 ```mermaid
 graph TB
     subgraph "Docker Network: app-network"
-        subgraph "Archon-Server"
+        subgraph "Archivemind-Server"
             API[FastAPI<br/>:8080]
             SIO[Socket.IO<br/>:8080]
         end
         
-        subgraph "archon-mcp"
+        subgraph "Archivemind-mcp"
             MCP[MCP Server<br/>:8051]
         end
         
-        subgraph "archon-agents"
+        subgraph "Archivemind-agents"
             Agents[AI Agents<br/>:8052]
         end
         
@@ -76,11 +76,11 @@ graph TB
 
 | Service | Container Name | Container Port | Host Port | Purpose |
 |---------|----------------|----------------|-----------|---------|
-| Frontend | archon-frontend | 5173 | 3737 | React UI |
-| Server | Archon-Server | 8080 | 8080 | FastAPI + Socket.IO |
-| MCP Server | archon-mcp | 8051 | 8051 | AI Agent connections |
-| AI Agents | archon-agents | 8052 | 8052 | AI processing service |
-| Documentation | archon-docs | 80 | 3838 | This documentation |
+| Frontend | Archivemind-frontend | 5173 | 3737 | React UI |
+| Server | Archivemind-Server | 8080 | 8080 | FastAPI + Socket.IO |
+| MCP Server | Archivemind-mcp | 8051 | 8051 | AI Agent connections |
+| AI Agents | Archivemind-agents | 8052 | 8052 | AI processing service |
+| Documentation | Archivemind-docs | 80 | 3838 | This documentation |
 
 ## Essential Configuration
 
@@ -112,7 +112,7 @@ LOGFIRE_ENABLED=false              # true=Logfire logging, false=standard loggin
 
 ### Unified Logging Architecture
 
-Archon includes a unified logging system that works seamlessly with or without Logfire:
+Archivemind includes a unified logging system that works seamlessly with or without Logfire:
 
 ```bash
 # Standard Logging (Default - Zero Setup)
@@ -131,7 +131,7 @@ LOGFIRE_TOKEN=your_token
 
 ### LLM Provider Configuration
 
-Archon supports multiple LLM providers through the Settings UI:
+Archivemind supports multiple LLM providers through the Settings UI:
 
 - **OpenAI** (default) - Uses your existing OpenAI API key
 - **Google Gemini** - Google's latest models
@@ -147,7 +147,7 @@ Configure in **Settings → RAG Settings → LLM Provider**
 
 ### Socket.IO Configuration
 
-Archon uses Socket.IO for all real-time features. The default configuration works out of the box:
+Archivemind uses Socket.IO for all real-time features. The default configuration works out of the box:
 
 ```python
 # Backend Socket.IO settings (socketio_app.py)
@@ -206,9 +206,9 @@ docker compose logs -f
 
 <Admonition type="warning" title="Important">
 Inside Docker containers, services communicate using container names, not `localhost`:
-- Frontend → Server: `http://Archon-Server:8080`
-- API → MCP: `http://archon-mcp:8051`
-- API → Agents: `http://archon-agents:8052`
+- Frontend → Server: `http://Archivemind-Server:8080`
+- API → MCP: `http://Archivemind-mcp:8051`
+- API → Agents: `http://Archivemind-agents:8052`
 - Never use `localhost` in container-to-container communication
 </Admonition>
 
@@ -223,7 +223,7 @@ Inside Docker containers, services communicate using container names, not `local
 ```typescript
 proxy: {
   '/api': {
-    target: 'http://Archon-Server:8080',
+    target: 'http://Archivemind-Server:8080',
     ws: true
   }
 }
@@ -238,12 +238,12 @@ proxy: {
 ```typescript
 proxy: {
   '/api': {
-    target: 'http://Archon-Server:8080',
+    target: 'http://Archivemind-Server:8080',
     changeOrigin: true,
     ws: true
   },
   '/socket.io': {
-    target: 'http://Archon-Server:8080',
+    target: 'http://Archivemind-Server:8080',
     changeOrigin: true,
     ws: true
   }
@@ -284,7 +284,7 @@ The frontend performs automatic health checks to detect server disconnections. C
 - **Check Interval**: 30 seconds (defined in `HEALTH_CHECK_INTERVAL_MS` constant)
 - **Timeout**: 10 seconds per health check request
 - **Disconnect Threshold**: 2 missed checks (60 seconds total)
-- **Location**: `archon-ui-main/src/services/serverHealthService.ts`
+- **Location**: `Archivemind-ui-main/src/services/serverHealthService.ts`
 
 To adjust the health check interval, modify the constant at the top of the file:
 ```typescript
@@ -295,14 +295,14 @@ const HEALTH_CHECK_INTERVAL_MS = 30000; // 30 seconds (default)
 
 ```bash
 # Restart a specific service
-docker compose restart archon-server
+docker compose restart Archivemind-server
 
 # Rebuild after code changes
-docker compose build archon-server
-docker compose up -d archon-server
+docker compose build Archivemind-server
+docker compose up -d Archivemind-server
 
 # View real-time logs for a service
-docker compose logs -f archon-server
+docker compose logs -f Archivemind-server
 
 # View all service logs
 docker compose logs -f
@@ -310,14 +310,14 @@ docker compose logs -f
 
 ### Service Discovery
 
-Archon includes automatic service discovery that works across environments:
+Archivemind includes automatic service discovery that works across environments:
 
 ```python
 from src.config.service_discovery import discovery
 
 # Automatically detects environment
 api_url = discovery.get_service_url("api")
-# Docker: http://Archon-Server:8080
+# Docker: http://Archivemind-Server:8080
 # Local: http://localhost:8080
 ```
 

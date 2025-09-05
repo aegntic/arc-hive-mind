@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem';
 import Admonition from '@theme/Admonition';
 
 
-# 🚀 Getting Started with Archon
+# 🚀 Getting Started with Archivemind
 
 <div className="hero hero--primary">
   <div className="container">
@@ -27,17 +27,17 @@ import Admonition from '@theme/Admonition';
 
 ---
 <Admonition type="tip" icon="🎯" title="What You'll Build">
-By the end of this guide, you'll have a **fully operational Archon system** with:
+By the end of this guide, you'll have a **fully operational Archivemind system** with:
 - ✅ **14 MCP tools** enabled and working
 - 🧠 **RAG system** for intelligent knowledge retrieval
-- 🌐 **Archon UI** Command Center for knowledge, projects, and tasks
+- 🌐 **Archivemind UI** Command Center for knowledge, projects, and tasks
 - 🔥 **Real-time Logfire monitoring** and debugging
 - 🌐 **Modern UI** for project and task management
 </Admonition>
 ---
-## 🎯 What is Archon?
+## 🎯 What is Archivemind?
 
-Archon is a **Model Context Protocol (MCP) server** that creates a centralized knowledge base for your AI coding assistants. Connect Cursor, Windsurf, or Claude Desktop to give your AI agents access to:
+Archivemind is a **Model Context Protocol (MCP) server** that creates a centralized knowledge base for your AI coding assistants. Connect Cursor, Windsurf, or Claude Desktop to give your AI agents access to:
 
 - **Your documentation** (crawled websites, uploaded PDFs/docs)
 - **Smart search capabilities** with advanced RAG strategies  
@@ -54,8 +54,8 @@ Archon is a **Model Context Protocol (MCP) server** that creates a centralized k
 ### 1. Clone & Setup
 
 ```bash
-git clone https://github.com/coleam00/archon.git
-cd archon
+git clone https://github.com/coleam00/archivemind.git
+cd archivemind
 
 # Create environment file
 cp .env.example .env
@@ -87,7 +87,7 @@ Create a new [Supabase project](https://supabase.com/dashboard), then follow the
 **Run `migration/1_initial_setup.sql`** - Creates vector database, settings, and core tables
 
 #### Step 2: Install Projects Module
-**Run `migration/2_archon_projects.sql`** - Creates project and task management tables
+**Run `migration/2_archivemind_projects.sql`** - Creates project and task management tables
 
 #### Step 3: Enable MCP Client Management (Optional)
 **Run `migration/3_mcp_client_management.sql`** - Adds MCP client connection management features
@@ -112,7 +112,7 @@ Create a new [Supabase project](https://supabase.com/dashboard), then follow the
 
 </details>
 
-### 4. Start Archon
+### 4. Start Archivemind
 
 ```bash
 # Build and start all services
@@ -123,7 +123,7 @@ docker compose logs -f
 ```
 
 <Admonition type="tip" icon="🔥" title="Hot Module Reload">
-Archon includes Hot Module Reload (HMR) for both Python and React code. Changes to source files automatically reload without container rebuilds.
+Archivemind includes Hot Module Reload (HMR) for both Python and React code. Changes to source files automatically reload without container rebuilds.
 
 **No rebuild needed for:**
 - Python code changes (`.py` files) 
@@ -152,7 +152,7 @@ Archon includes Hot Module Reload (HMR) for both Python and React code. Changes 
 4. Get connection details for your AI client
 
 <Admonition type="success" icon="🎉" title="You're Ready!">
-Your Archon system is now running with **14 MCP tools** available. Your AI agents can now access your knowledge base!
+Your Archivemind system is now running with **14 MCP tools** available. Your AI agents can now access your knowledge base!
 </Admonition>
 
 ## 🛠️ What's Included
@@ -196,11 +196,11 @@ When you run `docker compose up -d`, you get:
 }}%%
 graph TB
     subgraph "🚀 Docker Microservices Stack"
-        Frontend["🌐 Frontend Container<br/>React + Vite<br/>archon-frontend<br/>Port 3737"]
-        API["⚡ Server Container<br/>FastAPI + Socket.IO<br/>Archon-Server<br/>Port 8080"]
-        MCP["🔧 MCP Server<br/>14 MCP Tools<br/>archon-mcp<br/>Port 8051"]
-        Agents["🤖 Agents Service<br/>AI Processing<br/>archon-agents<br/>Port 8052"]
-        Docs["📚 Documentation<br/>Docusaurus<br/>archon-docs<br/>Port 3838"]
+        Frontend["🌐 Frontend Container<br/>React + Vite<br/>archivemind-frontend<br/>Port 3737"]
+        API["⚡ Server Container<br/>FastAPI + Socket.IO<br/>Archivemind-Server<br/>Port 8080"]
+        MCP["🔧 MCP Server<br/>14 MCP Tools<br/>archivemind-mcp<br/>Port 8051"]
+        Agents["🤖 Agents Service<br/>AI Processing<br/>archivemind-agents<br/>Port 8052"]
+        Docs["📚 Documentation<br/>Docusaurus<br/>archivemind-docs<br/>Port 3838"]
     end
 
     subgraph "☁️ External Services"
@@ -231,7 +231,7 @@ Once everything is running:
 
 ## 🔌 Connecting to Cursor IDE
 
-To connect Cursor to your Archon MCP server, add this configuration:
+To connect Cursor to your Archivemind MCP server, add this configuration:
 
 <Tabs>
 <TabItem value="cursor" label="Cursor IDE" default>
@@ -241,7 +241,7 @@ To connect Cursor to your Archon MCP server, add this configuration:
 ```json
 {
   "mcpServers": {
-    "archon": {
+    "archivemind": {
       "command": "docker",
       "args": [
         "exec", 
@@ -249,7 +249,7 @@ To connect Cursor to your Archon MCP server, add this configuration:
         "-e", "TRANSPORT=stdio",
         "-e", "HOST=localhost", 
         "-e", "PORT=8051",
-        "archon-mcp",
+        "archivemind-mcp",
         "python", "src/mcp_server.py"
       ]
     }
@@ -322,7 +322,7 @@ For production deployments and advanced features:
 This documentation is organized for different use cases:
 
 ### 🚀 Getting Started (You Are Here)
-**QuickStart guide** to get Archon running in minutes
+**QuickStart guide** to get Archivemind running in minutes
 
 ### 🔌 MCP Integration  
 **[MCP Overview](./mcp-overview)** - Connect Cursor, Windsurf, Claude Desktop, and other MCP clients
@@ -334,7 +334,7 @@ This documentation is organized for different use cases:
 **[Configuration Guide](./configuration.mdx)** - Setup, monitoring, and Logfire integration
 
 ### 🚀 Production Deployment
-**[Deployment Guide](./deployment.mdx)** - Scale Archon for team and production use
+**[Deployment Guide](./deployment.mdx)** - Scale Archivemind for team and production use
 
 ### 🛠️ Development
 **[API Reference](./api-reference.mdx)** - REST API endpoints and development guides
@@ -355,9 +355,9 @@ docker compose down
 docker compose up --build -d
 
 # Check container logs
-docker compose logs archon-server
-docker compose logs archon-mcp
-docker compose logs archon-agents
+docker compose logs archivemind-server
+docker compose logs archivemind-mcp
+docker compose logs archivemind-agents
 ```
 
 </details>
@@ -367,7 +367,7 @@ docker compose logs archon-agents
 
 ```bash
 # Verify environment variables
-docker compose exec archon-server env | grep -E "(SUPABASE|OPENAI)"
+docker compose exec archivemind-server env | grep -E "(SUPABASE|OPENAI)"
 
 # Check MCP server health
 curl http://localhost:8051/sse
@@ -399,12 +399,12 @@ curl -X POST http://localhost:8080/api/rag/query \
 ## 💬 Getting Help
 
 - **📖 [Complete Documentation](http://localhost:3838)** - Comprehensive guides
-- **🐛 [GitHub Issues](https://github.com/coleam00/archon/issues)** - Bug reports and feature requests
+- **🐛 [GitHub Issues](https://github.com/coleam00/archivemind/issues)** - Bug reports and feature requests
 - **📊 [Logfire Dashboard](https://logfire.pydantic.dev/)** - Optional enhanced logging (when `LOGFIRE_ENABLED=true`)
 
 ---
 
 <p align="center">
   <strong>Supercharging AI IDE's with knowledge and tasks</strong><br/>
-  <em>Transform your AI coding experience with Archon</em>
+  <em>Transform your AI coding experience with Archivemind</em>
 </p> 

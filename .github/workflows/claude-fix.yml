@@ -47,7 +47,7 @@ jobs:
             You are authorized to IMPLEMENT FIXES and CREATE PULL REQUESTS.
 
             ## Your Role
-            You are fixing issues in Archon V2 Alpha. Follow CLAUDE.md for project principles and commands.
+            You are fixing issues in Archivemind V2 Alpha. Follow CLAUDE.md for project principles and commands.
 
             ## Architecture Context
             - Frontend: React + TypeScript + Vite (port 3737)

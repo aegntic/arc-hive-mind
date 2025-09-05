@@ -5,7 +5,7 @@ sidebar_position: 6
 
 # MCP Server
 
-The MCP service provides a Model Context Protocol interface for AI clients to access Archon's functionality via HTTP.
+The MCP service provides a Model Context Protocol interface for AI clients to access Archivemind's functionality via HTTP.
 
 ## Architecture
 
@@ -72,8 +72,8 @@ async def delete_source(ctx: Context, source: str) -> str:
 
 ```bash
 # Server connection
-API_BASE_URL=http://archon-server:8080
-AGENTS_BASE_URL=http://archon-agents:8052
+API_BASE_URL=http://Archivemind-server:8080
+AGENTS_BASE_URL=http://Archivemind-agents:8052
 
 # Authentication
 MCP_SERVICE_KEY=your-service-key
@@ -86,18 +86,18 @@ LOGFIRE_TOKEN=your-logfire-token    # Only required when LOGFIRE_ENABLED=true
 ### Docker Service
 
 ```yaml
-archon-mcp:
+Archivemind-mcp:
   build: ./python
   ports:
     - "8051:8000"
   environment:
-    - API_BASE_URL=http://archon-server:8080
+    - API_BASE_URL=http://Archivemind-server:8080
   command: ["python", "-m", "src.mcp.mcp_server"]
 ```
 
 ## Client Configuration
 
-Archon MCP server uses **SSE (Server-Sent Events) transport only**.
+Archivemind MCP server uses **SSE (Server-Sent Events) transport only**.
 
 ### Cursor IDE
 
@@ -106,7 +106,7 @@ Add to MCP settings:
 ```json
 {
   "mcpServers": {
-    "archon": {
+    "Archivemind": {
       "uri": "http://localhost:8051/sse"
     }
   }
@@ -116,7 +116,7 @@ Add to MCP settings:
 ### Claude Code
 
 ```bash
-claude mcp add --transport sse archon http://localhost:8051/sse
+claude mcp add --transport sse Archivemind http://localhost:8051/sse
 ```
 
 ### Windsurf IDE
@@ -126,7 +126,7 @@ Add to settings:
 ```json
 {
   "mcp.servers": {
-    "archon": {
+    "Archivemind": {
       "uri": "http://localhost:8051/sse"
     }
   }

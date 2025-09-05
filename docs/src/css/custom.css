@@ -1,6 +1,6 @@
 /**
- * Archon Documentation - Aurora Borealis Glass Theme
- * Using colors from the Archon neon logo SVG
+ * Archivemind Documentation - Aurora Borealis Glass Theme
+ * Using colors from the Archivemind neon logo SVG
  */
 
 /* Import Inter font from Google Fonts */
@@ -587,37 +587,37 @@ body {
 }
 
 /* ====== HOMEPAGE SECTIONS STYLING ====== */
-.whatIsArchon, .quickStart, .nextSteps, .callToAction {
+.whatIsArchivemind, .quickStart, .nextSteps, .callToAction {
   padding: 4rem 0;
 }
 
-.whatIsArchon {
+.whatIsArchivemind {
   background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(5px);
 }
 
-.whatIsArchon h2 {
+.whatIsArchivemind h2 {
   color: #ffffff;
   text-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
   text-align: center;
   margin-bottom: 2rem;
 }
 
-.whatIsArchon p {
+.whatIsArchivemind p {
   color: #e5e7eb;
   font-size: 1.1rem;
   line-height: 1.7;
   margin-bottom: 1.5rem;
 }
 
-.whatIsArchon a {
+.whatIsArchivemind a {
   color: #a855f7;
   text-decoration: none;
   border-bottom: 1px solid rgba(168, 85, 247, 0.3);
   transition: all 0.2s ease;
 }
 
-.whatIsArchon a:hover {
+.whatIsArchivemind a:hover {
   color: #c084fc;
   border-bottom-color: #c084fc;
   text-shadow: 0 0 10px rgba(192, 132, 252, 0.5);
@@ -757,7 +757,7 @@ body {
     font-size: 2rem;
   }
 
-  .whatIsArchon, .quickStart, .nextSteps, .callToAction {
+  .whatIsArchivemind, .quickStart, .nextSteps, .callToAction {
     padding: 3rem 0;
   }
 
@@ -811,7 +811,7 @@ body {
     font-size: 1.75rem;
   }
 
-  .whatIsArchon, .quickStart, .nextSteps, .callToAction {
+  .whatIsArchivemind, .quickStart, .nextSteps, .callToAction {
     padding: 2.5rem 0;
   }
 

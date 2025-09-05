@@ -1,5 +1,5 @@
 """
-RAG Module for Archon MCP Server (HTTP-based version)
+RAG Module for ArchiveMind MCP Server (HTTP-based version)
 
 This module provides tools for:
 - RAG query and search

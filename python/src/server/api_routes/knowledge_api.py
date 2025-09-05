@@ -246,7 +246,7 @@ async def get_knowledge_item_code_examples(source_id: str):
         # Query code examples with full content for this specific source
         supabase = get_supabase_client()
         result = (
-            supabase.from_("archon_code_examples")
+            supabase.from_("archivemind_code_examples")
             .select("id, source_id, content, summary, metadata")
             .eq("source_id", source_id)
             .execute()

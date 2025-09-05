@@ -85,7 +85,7 @@ async def add_documents_to_supabase(
                         cancellation_check()
 
                     batch_urls = unique_urls[i : i + delete_batch_size]
-                    client.table("archon_crawled_pages").delete().in_("url", batch_urls).execute()
+                    client.table("archivemind_crawled_pages").delete().in_("url", batch_urls).execute()
                     # Yield control to allow other async operations
                     if i + delete_batch_size < len(unique_urls):
                         await asyncio.sleep(0.05)  # Reduced pause between delete batches
@@ -104,7 +104,7 @@ async def add_documents_to_supabase(
 
                 batch_urls = unique_urls[i : i + 10]
                 try:
-                    client.table("archon_crawled_pages").delete().in_("url", batch_urls).execute()
+                    client.table("archivemind_crawled_pages").delete().in_("url", batch_urls).execute()
                     await asyncio.sleep(0.05)  # Rate limit to prevent overwhelming
                 except Exception as inner_e:
                     search_logger.error(
@@ -332,7 +332,7 @@ async def add_documents_to_supabase(
                     cancellation_check()
 
                 try:
-                    client.table("archon_crawled_pages").insert(batch_data).execute()
+                    client.table("archivemind_crawled_pages").insert(batch_data).execute()
                     total_chunks_stored += len(batch_data)
 
                     # Increment completed batches and report simple progress
@@ -377,7 +377,7 @@ async def add_documents_to_supabase(
                                 cancellation_check()
 
                             try:
-                                client.table("archon_crawled_pages").insert(record).execute()
+                                client.table("archivemind_crawled_pages").insert(record).execute()
                                 successful_inserts += 1
                                 total_chunks_stored += 1
                             except Exception as individual_error:

@@ -12,7 +12,7 @@ import Admonition from '@theme/Admonition';
 
 ## Overview
 
-Archon uses **Socket.IO** for real-time communication between the frontend and backend. We follow 2025 best practices - all events on the default namespace with room-based organization.
+Archivemind uses **Socket.IO** for real-time communication between the frontend and backend. We follow 2025 best practices - all events on the default namespace with room-based organization.
 
 <Admonition type="success" title="Simple by Design">
 - **Default namespace only**: Everything on root `/` namespace
@@ -419,7 +419,7 @@ This pattern is essential when services need to report progress through async So
 ## Room-Based Architecture Summary
 
 <Admonition type="info" title="2025 Socket.IO Best Practices">
-Archon follows modern Socket.IO patterns with:
+Archivemind follows modern Socket.IO patterns with:
 - **Default namespace only** - No custom namespaces like `/chat` or `/project`
 - **Room-based isolation** - Each feature uses specific rooms for targeted communication
 - **Automatic cleanup** - Socket.IO handles room membership and reconnection

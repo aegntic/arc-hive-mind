@@ -1,5 +1,5 @@
 """
-MCP Server for Archon (Microservices Version)
+MCP Server for ArchiveMind (Microservices Version)
 
 This is the MCP server that uses HTTP calls to other services
 instead of importing heavy dependencies directly. This significantly reduces
@@ -69,11 +69,11 @@ _shared_context = None
 
 server_host = "0.0.0.0"  # Listen on all interfaces
 
-# Require ARCHON_MCP_PORT to be set
-mcp_port = os.getenv("ARCHON_MCP_PORT")
+# Require ARCHIVEMIND_MCP_PORT to be set
+mcp_port = os.getenv("ARCHIVEMIND_MCP_PORT")
 if not mcp_port:
     raise ValueError(
-        "ARCHON_MCP_PORT environment variable is required. "
+        "ARCHIVEMIND_MCP_PORT environment variable is required. "
         "Please set it in your .env file or environment. "
         "Default value: 8051"
     )
@@ -81,7 +81,7 @@ server_port = int(mcp_port)
 
 
 @dataclass
-class ArchonContext:
+class ArchiveMindContext:
     """
     Context for MCP server.
     No heavy dependencies - just service client for HTTP calls.
@@ -103,7 +103,7 @@ class ArchonContext:
             self.startup_time = time.time()
 
 
-async def perform_health_checks(context: ArchonContext):
+async def perform_health_checks(context: ArchiveMindContext):
     """Perform health checks on dependent services via HTTP."""
     try:
         # Check dependent services
@@ -130,7 +130,7 @@ async def perform_health_checks(context: ArchonContext):
 
 
 @asynccontextmanager
-async def lifespan(server: FastMCP) -> AsyncIterator[ArchonContext]:
+async def lifespan(server: FastMCP) -> AsyncIterator[ArchiveMindContext]:
     """
     Lifecycle manager - no heavy dependencies.
     """
@@ -164,7 +164,7 @@ async def lifespan(server: FastMCP) -> AsyncIterator[ArchonContext]:
             logger.info("✓ Service client initialized")
 
             # Create context
-            context = ArchonContext(service_client=service_client)
+            context = ArchiveMindContext(service_client=service_client)
 
             # Perform initial health check
             await perform_health_checks(context)
@@ -189,13 +189,13 @@ async def lifespan(server: FastMCP) -> AsyncIterator[ArchonContext]:
 
 # Define MCP instructions for Claude Code and other clients
 MCP_INSTRUCTIONS = """
-# Archon MCP Server Instructions
+# ArchiveMind MCP Server Instructions
 
 ## 🚨 CRITICAL RULES (ALWAYS FOLLOW)
-1. **Task Management**: ALWAYS use Archon MCP tools for task management.
+1. **Task Management**: ALWAYS use ArchiveMind MCP tools for task management.
    - Combine with your local TODO tools for granular tracking
-   - First TODO: Update Archon task status
-   - Last TODO: Update Archon with findings/completion
+   - First TODO: Update ArchiveMind task status
+   - Last TODO: Update ArchiveMind with findings/completion
 
 2. **Research First**: Before implementing, use perform_rag_query and search_code_examples
 3. **Task-Driven Development**: Never code without checking current tasks first
@@ -265,12 +265,12 @@ MCP_INSTRUCTIONS = """
 # Initialize the main FastMCP server with fixed configuration
 try:
     logger.info("🏗️ MCP SERVER INITIALIZATION:")
-    logger.info("   Server Name: archon-mcp-server")
+    logger.info("   Server Name: archivemind-mcp-server")
     logger.info("   Description: MCP server using HTTP calls")
 
     mcp = FastMCP(
-        "archon-mcp-server",
-        description="MCP server for Archon - uses HTTP calls to other services",
+        "archivemind-mcp-server",
+        description="MCP server for ArchiveMind - uses HTTP calls to other services",
         instructions=MCP_INSTRUCTIONS,
         lifespan=lifespan,
         host=server_host,
@@ -502,9 +502,9 @@ def main():
     """Main entry point for the MCP server."""
     try:
         # Initialize Logfire first
-        setup_logfire(service_name="archon-mcp-server")
+        setup_logfire(service_name="archivemind-mcp-server")
 
-        logger.info("🚀 Starting Archon MCP Server")
+        logger.info("🚀 Starting ArchiveMind MCP Server")
         logger.info("   Mode: Streamable HTTP")
         logger.info(f"   URL: http://{server_host}:{server_port}/mcp")
 

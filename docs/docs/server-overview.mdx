@@ -5,7 +5,7 @@ sidebar_position: 3
 
 # Server Overview
 
-The Server service is the core of Archon, containing all business logic, services, and data operations.
+The Server service is the core of Archivemind, containing all business logic, services, and data operations.
 
 ## Architecture
 
@@ -33,11 +33,11 @@ Frontend → Server API ← MCP (via HTTP) ← AI Clients
 
 ```yaml
 services:
-  archon-server:     # FastAPI + Socket.IO (port 8080)
-  archon-mcp:        # MCP Server (port 8051)
-  archon-agents:     # AI Agents (port 8052)
-  archon-frontend:   # React UI (port 3737)
-  archon-docs:       # Documentation (port 3838)
+  Archivemind-server:     # FastAPI + Socket.IO (port 8080)
+  Archivemind-mcp:        # MCP Server (port 8051)
+  Archivemind-agents:     # AI Agents (port 8052)
+  Archivemind-frontend:   # React UI (port 3737)
+  Archivemind-docs:       # Documentation (port 3838)
 ```
 
 ## Key Components
@@ -86,16 +86,16 @@ LOGFIRE_ENABLED=false              # true=Logfire logging, false=standard loggin
 LOGFIRE_TOKEN=your_logfire_token    # Only required when LOGFIRE_ENABLED=true
 
 # Service URLs (for inter-service communication)
-API_BASE_URL=http://archon-server:8080
-AGENTS_BASE_URL=http://archon-agents:8052
+API_BASE_URL=http://Archivemind-server:8080
+AGENTS_BASE_URL=http://Archivemind-agents:8052
 ```
 
 ## Development Setup
 
 1. **Clone repository**
    ```bash
-   git clone https://github.com/ArchonInnovations/archon.git
-   cd archon
+   git clone https://github.com/ArchivemindInnovations/Archivemind.git
+   cd Archivemind
    ```
 
 2. **Start services**

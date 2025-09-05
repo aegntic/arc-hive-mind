@@ -10,12 +10,12 @@ import Admonition from '@theme/Admonition';
 <div className="hero hero--primary">
   <div className="container">
     <h2 className="hero__subtitle">
-      **Monitor your Archon services**: Health checks, performance metrics, and troubleshooting tools
+      **Monitor your Archivemind services**: Health checks, performance metrics, and troubleshooting tools
     </h2>
   </div>
 </div>
 
-Archon provides built-in monitoring and health checking across all services to help you maintain optimal performance and quickly troubleshoot issues.
+Archivemind provides built-in monitoring and health checking across all services to help you maintain optimal performance and quickly troubleshoot issues.
 
 ## 🏥 Health Checks
 
@@ -37,7 +37,7 @@ curl http://localhost:8080/api/database/metrics
 
 ### Service Status
 
-Monitor the status of all Archon services:
+Monitor the status of all Archivemind services:
 
 | Service | Port | Health Endpoint | Purpose |
 |---------|------|----------------|---------|
@@ -50,7 +50,7 @@ Monitor the status of all Archon services:
 
 ### Key Metrics
 
-Archon tracks important performance metrics:
+Archivemind tracks important performance metrics:
 
 - **RAG Query Performance**: Average search times and accuracy
 - **Database Performance**: Connection pool health and query times
@@ -68,7 +68,7 @@ Socket.IO connections provide real-time monitoring:
 ## 🔧 Troubleshooting
 
 <Admonition type="tip" title="Quick Debugging">
-Use the health endpoints and browser developer tools to quickly diagnose issues with your Archon installation.
+Use the health endpoints and browser developer tools to quickly diagnose issues with your Archivemind installation.
 </Admonition>
 
 ### Common Issues
@@ -89,8 +89,8 @@ Monitor service logs:
 docker-compose logs -f
 
 # Specific service
-docker-compose logs -f archon-server
-docker-compose logs -f archon-mcp
+docker-compose logs -f Archivemind-server
+docker-compose logs -f Archivemind-mcp
 ```
 
 ### Database Monitoring
@@ -126,12 +126,12 @@ LOGFIRE_ENABLED=false              # true=Logfire logging, false=standard loggin
 LOGFIRE_TOKEN=your_logfire_token    # Only required when LOGFIRE_ENABLED=true
 
 # Service communication
-API_BASE_URL=http://archon-server:8080
+API_BASE_URL=http://Archivemind-server:8080
 ```
 
 ### Unified Logging System
 
-Archon includes a unified logging system with optional [Logfire](https://logfire.pydantic.dev/) integration:
+Archivemind includes a unified logging system with optional [Logfire](https://logfire.pydantic.dev/) integration:
 
 **Standard Logging (Default)**:
 ```bash
@@ -160,7 +160,7 @@ LOGFIRE_TOKEN=your_logfire_token    # Get from logfire.pydantic.dev
 
 ### Resource Management
 
-Archon automatically manages resources:
+Archivemind automatically manages resources:
 
 - **Memory Adaptive Processing**: Adjusts concurrency based on available memory
 - **Rate Limiting**: Prevents API quota exhaustion

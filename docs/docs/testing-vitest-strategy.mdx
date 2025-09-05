@@ -5,7 +5,7 @@ sidebar_position: 10
 
 # Vitest Testing Strategy for React & TypeScript
 
-This document outlines Archon's comprehensive frontend testing strategy using Vitest with React and TypeScript, incorporating the latest best practices and our current implementation.
+This document outlines Archivemind's comprehensive frontend testing strategy using Vitest with React and TypeScript, incorporating the latest best practices and our current implementation.
 
 ## 🎯 Testing Philosophy
 
@@ -21,7 +21,7 @@ Our frontend testing follows these core principles:
 ## 📁 Current Project Structure
 
 ```
-archon-ui-main/
+Archivemind-ui-main/
 ├── vitest.config.ts          # Vitest configuration with coverage
 ├── vite.config.ts            # Dev server with test endpoints
 ├── test/
@@ -543,7 +543,7 @@ describe('Test Results Integration Flow', () => {
 
 ## 🎯 UI Test Runner Integration
 
-Archon includes a sophisticated UI test runner accessible from the Settings page:
+Archivemind includes a sophisticated UI test runner accessible from the Settings page:
 
 ### Test Results Modal Features
 
@@ -594,7 +594,7 @@ describe('TestResultsModal', () => {
 
 ```bash
 # Navigate to frontend directory
-cd archon-ui-main
+cd Archivemind-ui-main
 
 # Run all tests
 npm test
@@ -810,24 +810,24 @@ jobs:
       with:
         node-version: '20'
         cache: 'npm'
-        cache-dependency-path: archon-ui-main/package-lock.json
+        cache-dependency-path: Archivemind-ui-main/package-lock.json
     
     - name: Install dependencies
-      working-directory: ./archon-ui-main
+      working-directory: ./Archivemind-ui-main
       run: npm ci
     
     - name: Type check
-      working-directory: ./archon-ui-main
+      working-directory: ./Archivemind-ui-main
       run: npm run type-check
     
     - name: Run tests with coverage
-      working-directory: ./archon-ui-main
+      working-directory: ./Archivemind-ui-main
       run: npm run test:coverage
     
     - name: Upload coverage reports
       uses: codecov/codecov-action@v3
       with:
-        file: ./archon-ui-main/coverage/coverage-final.json
+        file: ./Archivemind-ui-main/coverage/coverage-final.json
         flags: frontend
         fail_ci_if_error: true
 ```

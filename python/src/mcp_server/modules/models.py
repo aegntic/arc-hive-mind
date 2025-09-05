@@ -1,5 +1,5 @@
 """
-Pydantic Models for Archon Project Management
+Pydantic Models for ArchiveMind Project Management
 
 This module defines Pydantic models for:
 - Project Requirements Document (PRD) structure

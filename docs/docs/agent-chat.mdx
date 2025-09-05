@@ -45,7 +45,7 @@ graph LR
 <TabItem value="component" label="React Component">
 
 ```tsx
-import { ArchonChatPanel } from '@/components/layouts/ArchonChatPanel';
+import { ArchivemindChatPanel } from '@/components/layouts/ArchivemindChatPanel';
 
 function App() {
   return (
@@ -56,7 +56,7 @@ function App() {
       </div>
       
       {/* Chat Panel */}
-      <ArchonChatPanel />
+      <ArchivemindChatPanel />
     </div>
   );
 }
@@ -98,7 +98,7 @@ await agentChatService.connectWebSocket(
 // Send a message
 await agentChatService.sendMessage(
   session_id,
-  'What is Archon?',
+  'What is Archivemind?',
   { match_count: 5 }  // Optional context
 );
 ```
@@ -148,7 +148,7 @@ async def process_agent_response(session_id: str, message: str, context: dict):
     async with httpx.AsyncClient() as client:
         async with client.stream(
             "POST",
-            f"http://archon-agents:8052/agents/rag/stream",
+            f"http://Archivemind-agents:8052/agents/rag/stream",
             json={
                 "prompt": message,
                 "context": context
@@ -183,7 +183,7 @@ Minimal REST endpoints for session management:
 
 ### RAG Agent
 - **Purpose**: Knowledge base Q&A with context retrieval
-- **Context**: `{ match_count: 5, source_filter: "docs.archon.com" }`
+- **Context**: `{ match_count: 5, source_filter: "docs.Archivemind.com" }`
 - **Best for**: Documentation queries, technical questions
 
 ### Document Agent
@@ -322,7 +322,7 @@ The chat service handles various connection scenarios:
 
 ```bash
 # Agent service configuration
-AGENT_SERVICE_URL=http://archon-agents:8052
+AGENT_SERVICE_URL=http://Archivemind-agents:8052
 
 # Socket.IO configuration
 SOCKETIO_PING_TIMEOUT=60
@@ -387,7 +387,7 @@ async def test_chat_flow():
 
 **Chat shows "offline"**
 - Check if agents container is running: `docker ps | grep agents`
-- Verify server logs: `docker logs archon-server`
+- Verify server logs: `docker logs Archivemind-server`
 - Check Socket.IO connection in browser DevTools
 
 **Messages not streaming**

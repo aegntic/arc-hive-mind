@@ -7,8 +7,8 @@ services:
     build:
       context: ./docs
       dockerfile: Dockerfile
-    container_name: Archon-Docs
+    container_name: Archivemind-Docs
     ports:
-      - "${ARCHON_DOCS_PORT:-3838}:80"
+      - "${ARCHIVEMIND_DOCS_PORT:-3838}:80"
     networks:
       - app-network

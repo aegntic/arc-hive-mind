@@ -1,7 +1,7 @@
 # API Naming Conventions
 
 ## Overview
-This document defines the naming conventions used throughout the Archon V2 codebase for consistency and clarity.
+This document defines the naming conventions used throughout the Archivemind V2 codebase for consistency and clarity.
 
 ## Task Status Values
 **Database values only - no UI mapping:**
@@ -109,7 +109,7 @@ GET /api/agent-chat/sessions/{id}/messages - Chat messages
 ### Database Types (from backend)
 ```typescript
 type DatabaseTaskStatus = 'todo' | 'doing' | 'review' | 'done';
-type Assignee = 'User' | 'Archon' | 'AI IDE Agent';
+type Assignee = 'User' | 'Archivemind' | 'AI IDE Agent';
 ```
 
 ### Request/Response Types

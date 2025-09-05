@@ -11,7 +11,7 @@ import Admonition from '@theme/Admonition';
 
 <Admonition type="info" icon="🎯" title="Architecture Clarification">
 
-**Archon's MCP implementation follows a clear separation of concerns:**
+**Archivemind's MCP implementation follows a clear separation of concerns:**
 - The **Server service** contains ALL business logic, ML models, and data operations
 - The **MCP service** is a lightweight HTTP-based wrapper that exposes Server functionality as MCP tools
 - **MCP communicates with Server exclusively via HTTP APIs** - maintaining true microservices separation
@@ -20,7 +20,7 @@ import Admonition from '@theme/Admonition';
 
 ## What is MCP?
 
-The Model Context Protocol (MCP) is an open standard that enables AI applications to securely access external data sources and tools. Archon implements both sides of MCP:
+The Model Context Protocol (MCP) is an open standard that enables AI applications to securely access external data sources and tools. Archivemind implements both sides of MCP:
 
 - **MCP Server**: Exposes 14 tools following action-based patterns for knowledge management and task organization
 - **MCP Client**: Universal SSE-based client for connecting to any MCP server using Streamable HTTP transport
@@ -32,7 +32,7 @@ The Model Context Protocol (MCP) is an open standard that enables AI application
         <h3>MCP Server</h3>
       </div>
       <div className="card__body">
-        <p>Archon as an MCP Server - Expose your knowledge base to AI clients</p>
+        <p>Archivemind as an MCP Server - Expose your knowledge base to AI clients</p>
         <ul>
           <li>14 comprehensive tools using flexible action-based patterns</li>
           <li>Real-time Logfire monitoring of all tool calls</li>
@@ -51,7 +51,7 @@ The Model Context Protocol (MCP) is an open standard that enables AI application
         <h3>MCP Client</h3>
       </div>
       <div className="card__body">
-        <p>Universal MCP Client - Connect to any SSE-based MCP server from Archon's UI</p>
+        <p>Universal MCP Client - Connect to any SSE-based MCP server from Archivemind's UI</p>
         <ul>
           <li>Connect to any MCP server using Streamable HTTP (SSE) transport</li>
           <li>Interactive tool testing with real-time results</li>
@@ -66,7 +66,7 @@ The Model Context Protocol (MCP) is an open standard that enables AI application
   </div>
 </div>
 
-## Archon MCP Architecture
+## Archivemind MCP Architecture
 
 ```mermaid
 %%{init:{
@@ -95,13 +95,13 @@ graph TB
         Other["🔧 Other MCP Clients<br/>connects via SSE"]
     end
     
-    subgraph "🏰 Archon Instance"
+    subgraph "🏰 Archivemind Instance"
         subgraph "🔌 Universal MCP Client (Port 3737)"
             ClientUI["🎨 Client UI<br/>Tool Testing & Management"]
             ClientWS["📡 Socket.IO Real-time Updates"]
         end
         
-        subgraph "🛠️ Archon MCP Server (Port 8051)"
+        subgraph "🛠️ Archivemind MCP Server (Port 8051)"
             MCPCore["⚡ MCP Core Server<br/>+ Logfire Monitoring"]
             Tools["🛠️ 14 MCP Tools"]
             Health["🏥 Health & Session"]
@@ -122,18 +122,18 @@ graph TB
         ExtMCP3["🐙 GitHub MCP"]
     end
     
-    %% External clients to Archon MCP Server
+    %% External clients to Archivemind MCP Server
     Cursor -.->|JSON-RPC<br/>stdio| MCPCore
     Windsurf -.->|JSON-RPC<br/>stdio| MCPCore
     Claude -.->|JSON-RPC<br/>stdio| MCPCore
     Other -.->|SSE| MCPCore
     
-    %% Archon's Universal Client to external servers
+    %% Archivemind's Universal Client to external servers
     ClientUI -.->|JSON-RPC<br/>Various Transports| ExtMCP1
     ClientUI -.->|JSON-RPC<br/>Various Transports| ExtMCP2  
     ClientUI -.->|JSON-RPC<br/>Various Transports| ExtMCP3
     
-    %% Archon's Client can also connect to its own server
+    %% Archivemind's Client can also connect to its own server
     ClientUI -.->|JSON-RPC<br/>SSE| MCPCore
     
     %% Internal connections
@@ -153,11 +153,11 @@ graph TB
 ## Quick Start Guide
 
 <Tabs>
-<TabItem value="server" label="Using Archon as MCP Server" default>
+<TabItem value="server" label="Using Archivemind as MCP Server" default>
 
-Connect your AI client to Archon's knowledge base:
+Connect your AI client to Archivemind's knowledge base:
 
-1. Start Archon (Docker or local)
+1. Start Archivemind (Docker or local)
 2. Configure your AI client (Cursor, Windsurf, etc.)
 3. Begin using 14 comprehensive tools
 
@@ -165,7 +165,7 @@ Connect your AI client to Archon's knowledge base:
 ```json title="MCP Settings"
 {
   "mcpServers": {
-    "archon": {
+    "Archivemind": {
       "uri": "http://localhost:8051/sse"
     }
   }
@@ -174,14 +174,14 @@ Connect your AI client to Archon's knowledge base:
 
 **For Claude Code:**
 ```bash
-claude mcp add --transport sse archon http://localhost:8051/sse
+claude mcp add --transport sse Archivemind http://localhost:8051/sse
 ```
 
 **For Windsurf:**
 ```json
 {
   "mcp.servers": {
-    "archon": {
+    "Archivemind": {
       "uri": "http://localhost:8051/sse"
     }
   }
@@ -197,9 +197,9 @@ claude mcp add --transport sse archon http://localhost:8051/sse
 </TabItem>
 <TabItem value="client" label="Using Universal MCP Client">
 
-Connect to any MCP server from Archon's UI:
+Connect to any MCP server from Archivemind's UI:
 
-1. Open Archon UI → Navigate to MCP Client tab
+1. Open Archivemind UI → Navigate to MCP Client tab
 2. Add MCP servers (Brave Search, GitHub, Filesystem, etc.)
 3. Test tools interactively with real-time results
 4. Monitor all connections with Socket.IO updates
@@ -208,7 +208,7 @@ Connect to any MCP server from Archon's UI:
 - **Brave Search**: Web search capabilities
 - **GitHub**: Repository management
 - **Filesystem**: Local file operations
-- **Archon**: Your own knowledge base
+- **Archivemind**: Your own knowledge base
 - **Custom**: Any MCP-compatible server
 
 </TabItem>
@@ -218,7 +218,7 @@ Connect to any MCP server from Archon's UI:
 
 <Admonition type="info" icon="📊" title="Complete Tool Overview">
 
-**Archon provides 14 comprehensive MCP tools following modern patterns:**
+**Archivemind provides 14 comprehensive MCP tools following modern patterns:**
 
 </Admonition>
 
@@ -284,7 +284,7 @@ Connect to any MCP server from Archon's UI:
   </div>
 </div>
 
-## 🔥 Why Choose Archon's MCP Implementation?
+## 🔥 Why Choose Archivemind's MCP Implementation?
 
 ### 🏆 Industry-Leading Features
 
@@ -327,7 +327,7 @@ Connect to any MCP server from Archon's UI:
 
 <Admonition type="tip" icon="🔥" title="Built for Developers, by Developers">
 
-**Archon's MCP implementation prioritizes developer experience with comprehensive tooling, detailed documentation, and real-time debugging capabilities.**
+**Archivemind's MCP implementation prioritizes developer experience with comprehensive tooling, detailed documentation, and real-time debugging capabilities.**
 
 </Admonition>
 
@@ -343,7 +343,7 @@ Connect to any MCP server from Archon's UI:
 
 | Document | Purpose | Audience |
 |----------|---------|----------|
-| **[🛠️ MCP Server Guide](/mcp-server)** | Complete server setup, configuration, and troubleshooting | Developers using Archon as an MCP server |
+| **[🛠️ MCP Server Guide](/mcp-server)** | Complete server setup, configuration, and troubleshooting | Developers using Archivemind as an MCP server |
 | **[🔌 MCP Client Guide](/mcp-client)** | Universal client usage, server connections, and testing | Developers connecting to MCP servers |
 
 ### 🎯 Quick Navigation
@@ -395,26 +395,26 @@ Connect to any MCP server from Archon's UI:
 
 ## 🎉 Ready to Get Started?
 
-Choose your path based on how you want to use Archon's MCP capabilities:
+Choose your path based on how you want to use Archivemind's MCP capabilities:
 
 <Tabs>
-<TabItem value="expose" label="🛠️ Expose Archon as MCP Server">
+<TabItem value="expose" label="🛠️ Expose Archivemind as MCP Server">
 
-**You want to connect external AI clients (Cursor, Windsurf, etc.) to Archon's knowledge base**
+**You want to connect external AI clients (Cursor, Windsurf, etc.) to Archivemind's knowledge base**
 
 👉 **[Start with MCP Server Documentation](/mcp-server)**
 
 </TabItem>
 <TabItem value="connect" label="🔌 Connect to MCP Servers">
 
-**You want to use Archon's UI to connect to and test various MCP servers**
+**You want to use Archivemind's UI to connect to and test various MCP servers**
 
 👉 **[Start with MCP Client Documentation](/mcp-client)**
 
 </TabItem>
 <TabItem value="both" label="🚀 Use Both Capabilities">
 
-**You want to use Archon as both a server and client for maximum functionality**
+**You want to use Archivemind as both a server and client for maximum functionality**
 
 👉 **Start with [MCP Server](/mcp-server), then [MCP Client](/mcp-client)**
 
@@ -425,5 +425,5 @@ Choose your path based on how you want to use Archon's MCP capabilities:
 
 <div className="text--center">
   <p><strong>🔥 Ready to experience the most powerful MCP implementation available?</strong></p>
-  <p>Join thousands of developers already using Archon's MCP tools to supercharge their AI workflows!</p>
+  <p>Join thousands of developers already using Archivemind's MCP tools to supercharge their AI workflows!</p>
 </div> 

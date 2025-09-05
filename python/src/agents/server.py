@@ -70,14 +70,14 @@ async def fetch_credentials_from_server():
         try:
             async with httpx.AsyncClient() as client:
                 # Call the server's internal credentials endpoint
-                server_port = os.getenv("ARCHON_SERVER_PORT")
+                server_port = os.getenv("ARCHIVEMIND_SERVER_PORT")
                 if not server_port:
                     raise ValueError(
-                        "ARCHON_SERVER_PORT environment variable is required. "
+                        "ARCHIVEMIND_SERVER_PORT environment variable is required. "
                         "Please set it in your .env file or environment."
                     )
                 response = await client.get(
-                    f"http://archon-server:{server_port}/internal/credentials/agents", timeout=10.0
+                    f"http://archivemind-server:{server_port}/internal/credentials/agents", timeout=10.0
                 )
                 response.raise_for_status()
                 credentials = response.json()
@@ -141,7 +141,7 @@ async def lifespan(app: FastAPI):
 
 # Create FastAPI app
 app = FastAPI(
-    title="Archon Agents Service",
+    title="ArchiveMind Agents Service",
     description="Lightweight service hosting PydanticAI agents",
     version="1.0.0",
     lifespan=lifespan,
@@ -177,7 +177,7 @@ async def run_agent(request: AgentRequest):
         deps = {
             "context": request.context or {},
             "options": request.options or {},
-            "mcp_endpoint": os.getenv("MCP_SERVICE_URL", "http://archon-mcp:8051"),
+            "mcp_endpoint": os.getenv("MCP_SERVICE_URL", "http://archivemind-mcp:8051"),
         }
 
         # Run the agent
@@ -245,9 +245,9 @@ async def stream_agent(agent_type: str, request: AgentRequest):
                 )
             else:
                 # Default dependencies
-                from .base_agent import ArchonDependencies
+                from .base_agent import ArchiveMindDependencies
 
-                deps = ArchonDependencies()
+                deps = ArchiveMindDependencies()
 
             # Use PydanticAI's run_stream method
             # run_stream returns an async context manager directly
@@ -285,10 +285,10 @@ async def stream_agent(agent_type: str, request: AgentRequest):
 
 # Main entry point
 if __name__ == "__main__":
-    agents_port = os.getenv("ARCHON_AGENTS_PORT")
+    agents_port = os.getenv("ARCHIVEMIND_AGENTS_PORT")
     if not agents_port:
         raise ValueError(
-            "ARCHON_AGENTS_PORT environment variable is required. "
+            "ARCHIVEMIND_AGENTS_PORT environment variable is required. "
             "Please set it in your .env file or environment. "
             "Default value: 8052"
         )

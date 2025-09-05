@@ -15,14 +15,14 @@ from typing import Any
 from pydantic import BaseModel, Field
 from pydantic_ai import Agent, RunContext
 
-from .base_agent import ArchonDependencies, BaseAgent
+from .base_agent import ArchiveMindDependencies, BaseAgent
 from .mcp_client import get_mcp_client
 
 logger = logging.getLogger(__name__)
 
 
 @dataclass
-class RagDependencies(ArchonDependencies):
+class RagDependencies(ArchiveMindDependencies):
     """Dependencies for RAG operations."""
 
     project_id: str | None = None

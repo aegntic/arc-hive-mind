@@ -1,5 +1,5 @@
 ---
-title: Archon Projects Overview
+title: Archivemind Projects Overview
 sidebar_position: 1
 ---
 
@@ -7,7 +7,7 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Admonition from '@theme/Admonition';
 
-# 📊 Archon Projects: AI-Powered Project Management
+# 📊 Archivemind Projects: AI-Powered Project Management
 
 <div className="hero hero--primary">
   <div className="container">
@@ -17,11 +17,11 @@ import Admonition from '@theme/Admonition';
   </div>
 </div>
 
-Archon Projects brings intelligent project management to your AI development workflow. Your AI assistants can understand project context, create and update tasks, manage documentation, and help you stay organized while you code.
+Archivemind Projects brings intelligent project management to your AI development workflow. Your AI assistants can understand project context, create and update tasks, manage documentation, and help you stay organized while you code.
 
 ## 🎯 Overview
 
-The Archon task management system provides:
+The Archivemind task management system provides:
 
 - **Project Organization**: Structured project management with PRDs, features, and documentation
 - **Task Organization**: Organize and group related tasks
@@ -106,7 +106,7 @@ graph TB
 
 ## 📊 Data Structure
 
-Archon uses a simple but flexible data structure:
+Archivemind uses a simple but flexible data structure:
 
 - **Projects**: Main containers with title, description, PRD, features, and GitHub integration
 - **Tasks**: Organized under projects with logical grouping  
@@ -119,7 +119,7 @@ Archon uses a simple but flexible data structure:
 
 #### Via Web Interface
 
-1. **Open Archon**: Navigate to http://localhost:3737
+1. **Open Archivemind**: Navigate to http://localhost:3737
 2. **Go to Projects**: Click the "Projects" tab in the navigation
 3. **Create Project**: Click "New Project"
 4. **Fill Details**:
@@ -171,7 +171,7 @@ AI: [Uses create_project MCP tool]
    - **Title**: Clear, actionable task name
    - **Description**: Detailed requirements
    - **Status**: Initial status (usually "todo")
-   - **Assignee**: Choose from User, Archon, or AI IDE Agent
+   - **Assignee**: Choose from User, Archivemind, or AI IDE Agent
    - **Sources**: Add reference documentation
    - **Code Examples**: Add relevant code snippets
 4. **Save Task**: Click "Create"
@@ -185,7 +185,7 @@ curl -X POST "http://localhost:8080/api/tasks" \
     "project_id": "550e8400-e29b-41d4-a716-446655440000",
     "title": "Create authentication examples",
     "description": "Write comprehensive examples showing how to implement JWT authentication with our API, including token generation, validation, and error handling.",
-    "assignee": "Archon",
+    "assignee": "Archivemind",
     "sources": [
       {
         "name": "JWT.io Introduction",
@@ -401,7 +401,7 @@ task = await manage_task(
     project_id="project-uuid",
     title="Implement JWT authentication",
     description="Add JWT-based auth to all API endpoints",
-    assignee="Archon"
+    assignee="Archivemind"
 )
 
 # Update task status
@@ -532,7 +532,7 @@ Review this authentication code and create tasks for any improvements needed:
 
 ### PRD (Product Requirements Document) Structure
 
-When creating projects, Archon automatically generates a structured PRD:
+When creating projects, Archivemind automatically generates a structured PRD:
 
 ```json
 {
@@ -638,7 +638,7 @@ The frontend receives real-time updates via Socket.IO connections when:
 
 ## 📈 Progress Tracking
 
-Archon provides built-in progress tracking:
+Archivemind provides built-in progress tracking:
 
 - **Project completion percentage** based on completed tasks
 - **Task velocity** showing development pace over time  

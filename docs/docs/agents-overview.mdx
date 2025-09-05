@@ -32,7 +32,7 @@ import Admonition from '@theme/Admonition';
 
 ## 🏗️ Architecture Overview
 
-The Agents Service (`archon-agents`) runs on port 8052 and contains three specialized PydanticAI agents:
+The Agents Service (`Archivemind-agents`) runs on port 8052 and contains three specialized PydanticAI agents:
 
 ```mermaid
 %%{init:{
@@ -141,7 +141,7 @@ curl http://localhost:8052/health
 # Response
 {
   "status": "healthy",
-  "service": "archon-agents",
+  "service": "Archivemind-agents",
   "agents_available": ["document", "rag", "task"],
   "mcp_connection": "active"
 }
@@ -164,7 +164,7 @@ COPY src/agents/ src/agents/
 
 # Environment variables
 ENV PYTHONPATH=/app/src
-ENV MCP_SERVER_URL=http://archon-mcp:8051
+ENV MCP_SERVER_URL=http://Archivemind-mcp:8051
 
 # Run the service
 CMD ["uvicorn", "src.agents.server:app", "--host", "0.0.0.0", "--port", "8052"]

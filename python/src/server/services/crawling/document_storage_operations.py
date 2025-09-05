@@ -291,7 +291,7 @@ class DocumentStorageOperations:
                     if source_display_name:
                         fallback_data["source_display_name"] = source_display_name
 
-                    self.supabase_client.table("archon_sources").upsert(fallback_data).execute()
+                    self.supabase_client.table("archivemind_sources").upsert(fallback_data).execute()
                     safe_logfire_info(f"Fallback source creation succeeded for '{source_id}'")
                 except Exception as fallback_error:
                     logger.error(f"Both source creation attempts failed for '{source_id}'", exc_info=True)
@@ -307,7 +307,7 @@ class DocumentStorageOperations:
             for source_id in unique_source_ids:
                 try:
                     source_check = (
-                        self.supabase_client.table("archon_sources")
+                        self.supabase_client.table("archivemind_sources")
                         .select("source_id")
                         .eq("source_id", source_id)
                         .execute()

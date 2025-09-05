@@ -7,7 +7,7 @@ sidebar_label: Background Tasks
 
 ## Overview
 
-This document describes the architecture for handling long-running operations in Archon without blocking the FastAPI/Socket.IO event loop. The key insight is that browser-based operations (crawling) must remain in the main event loop, while only CPU-intensive operations should be offloaded to threads.
+This document describes the architecture for handling long-running operations in Archivemind without blocking the FastAPI/Socket.IO event loop. The key insight is that browser-based operations (crawling) must remain in the main event loop, while only CPU-intensive operations should be offloaded to threads.
 
 ## Architecture Principles
 

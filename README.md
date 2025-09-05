@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./archon-ui-main/public/archon-main-graphic.png" alt="Archon Main Graphic" width="853" height="422">
+  <img src="./archivemind-ui-main/public/archivemind-main-graphic.png" alt="Archivemind Main Graphic" width="853" height="422">
 </p>
 
 <p align="center">
@@ -16,29 +16,29 @@
 
 ---
 
-## 🎯 What is Archon?
+## 🎯 What is Archivemind?
 
-> Archon is currently in beta! Expect things to not work 100%, and please feel free to share any feedback and contribute with fixes/new features! Thank you to everyone for all the excitement we have for Archon already, as well as the bug reports, PRs, and discussions. It's a lot for our small team to get through but we're committed to addressing everything and making Archon into the best tool it possibly can be!
+> Archivemind is currently in beta! Expect things to not work 100%, and please feel free to share any feedback and contribute with fixes/new features! Thank you to everyone for all the excitement we have for Archivemind already, as well as the bug reports, PRs, and discussions. It's a lot for our small team to get through but we're committed to addressing everything and making Archivemind into the best tool it possibly can be!
 
-Archon is the **command center** for AI coding assistants. For you, it's a sleek interface to manage knowledge, context, and tasks for your projects. For the AI coding assistant(s), it's a **Model Context Protocol (MCP) server** to collaborate on and leverage the same knowledge, context, and tasks. Connect Claude Code, Kiro, Cursor, Windsurf, etc. to give your AI agents access to:
+Archivemind is the **command center** for AI coding assistants. For you, it's a sleek interface to manage knowledge, context, and tasks for your projects. For the AI coding assistant(s), it's a **Model Context Protocol (MCP) server** to collaborate on and leverage the same knowledge, context, and tasks. Connect Claude Code, Kiro, Cursor, Windsurf, etc. to give your AI agents access to:
 
 - **Your documentation** (crawled websites, uploaded PDFs/docs)
 - **Smart search capabilities** with advanced RAG strategies
 - **Task management** integrated with your knowledge base
 - **Real-time updates** as you add new content and collaborate with your coding assistant on tasks
-- **Much more** coming soon to build Archon into an integrated environment for all context engineering
+- **Much more** coming soon to build Archivemind into an integrated environment for all context engineering
 
-This new vision for Archon replaces the old one (the agenteer). Archon used to be the AI agent that builds other agents, and now you can use Archon to do that and more.
+This new vision for Archivemind replaces the old one (the agenteer). Archivemind used to be the AI agent that builds other agents, and now you can use Archivemind to do that and more.
 
-> It doesn't matter what you're building or if it's a new/existing codebase - Archon's knowledge and task management capabilities will improve the output of **any** AI driven coding.
+> It doesn't matter what you're building or if it's a new/existing codebase - Archivemind's knowledge and task management capabilities will improve the output of **any** AI driven coding.
 
 ## 🔗 Important Links
 
-- **[GitHub Discussions](https://github.com/coleam00/Archon/discussions)** - Join the conversation and share ideas about Archon
-- **[Contributing Guide](CONTRIBUTING.md)** - How to get involved and contribute to Archon
-- **[Introduction Video](https://youtu.be/8pRc_s2VQIo)** - Getting started guide and vision for Archon
-- **[Archon Kanban Board](https://github.com/users/coleam00/projects/1)** - Where maintainers are managing issues/features
-- **[Dynamous AI Mastery](https://dynamous.ai)** - The birthplace of Archon - come join a vibrant community of other early AI adopters all helping each other transform their careers and businesses!
+- **[GitHub Discussions](https://github.com/coleam00/Archivemind/discussions)** - Join the conversation and share ideas about Archivemind
+- **[Contributing Guide](CONTRIBUTING.md)** - How to get involved and contribute to Archivemind
+- **[Introduction Video](https://youtu.be/8pRc_s2VQIo)** - Getting started guide and vision for Archivemind
+- **[Archivemind Kanban Board](https://github.com/users/coleam00/projects/1)** - Where maintainers are managing issues/features
+- **[Dynamous AI Mastery](https://dynamous.ai)** - The birthplace of Archivemind - come join a vibrant community of other early AI adopters all helping each other transform their careers and businesses!
 
 ## Quick Start
 
@@ -54,10 +54,10 @@ This new vision for Archon replaces the old one (the agenteer). Archon used to b
 
 1. **Clone Repository**:
    ```bash
-   git clone https://github.com/coleam00/archon.git
+   git clone https://github.com/coleam00/Archivemind.git
    ```
    ```bash
-   cd archon
+   cd Archivemind
    ```
 2. **Environment Configuration**:
 
@@ -76,7 +76,7 @@ This new vision for Archon replaces the old one (the agenteer). Archon used to b
 
 4. **Start Services** (choose one):
 
-   **Full Docker Mode (Recommended for Normal Archon Usage)**
+   **Full Docker Mode (Recommended for Normal Archivemind Usage)**
 
    ```bash
    docker compose up --build -d
@@ -162,11 +162,11 @@ sudo yum install make
 If you need to completely reset your database and start fresh:
 
 <details>
-<summary>⚠️ <strong>Reset Database - This will delete ALL data for Archon!</strong></summary>
+<summary>⚠️ <strong>Reset Database - This will delete ALL data for Archivemind!</strong></summary>
 
 1. **Run Reset Script**: In your Supabase SQL Editor, run the contents of `migration/RESET_DB.sql`
 
-   ⚠️ WARNING: This will delete all Archon specific tables and data! Nothing else will be touched in your DB though.
+   ⚠️ WARNING: This will delete all Archivemind specific tables and data! Nothing else will be touched in your DB though.
 
 2. **Rebuild Database**: After reset, run `migration/complete_setup.sql` to create all the tables again.
 
@@ -190,21 +190,21 @@ The reset script safely removes all tables, functions, triggers, and policies wi
 
 | Service            | Container Name | Default URL           | Purpose                           |
 | ------------------ | -------------- | --------------------- | --------------------------------- |
-| **Web Interface**  | archon-ui      | http://localhost:3737 | Main dashboard and controls       |
-| **API Service**    | archon-server  | http://localhost:8181 | Web crawling, document processing |
-| **MCP Server**     | archon-mcp     | http://localhost:8051 | Model Context Protocol interface  |
-| **Agents Service** | archon-agents  | http://localhost:8052 | AI/ML operations, reranking       |  
+| **Web Interface**  | Archivemind-ui      | http://localhost:3737 | Main dashboard and controls       |
+| **API Service**    | Archivemind-server  | http://localhost:8181 | Web crawling, document processing |
+| **MCP Server**     | Archivemind-mcp     | http://localhost:8051 | Model Context Protocol interface  |
+| **Agents Service** | Archivemind-agents  | http://localhost:8052 | AI/ML operations, reranking       |  
 
 ## Upgrading
 
-To upgrade Archon to the latest version:
+To upgrade Archivemind to the latest version:
 
 1. **Pull latest changes**:
    ```bash
    git pull
    ```
 
-2. **Check for migrations**: Look in the `migration/` folder for any SQL files newer than your last update. Check the file created dates to determine if you need to run them. You can run these in the SQL editor just like you did when you first set up Archon. We are also working on a way to make handling these migrations automatic!
+2. **Check for migrations**: Look in the `migration/` folder for any SQL files newer than your last update. Check the file created dates to determine if you need to run them. You can run these in the SQL editor just like you did when you first set up Archivemind. We are also working on a way to make handling these migrations automatic!
 
 3. **Rebuild and restart**:
    ```bash
@@ -249,7 +249,7 @@ This is the same command used for initial setup - it rebuilds containers with th
 
 ### Microservices Structure
 
-Archon uses true microservices architecture with clear separation of concerns:
+Archivemind uses true microservices architecture with clear separation of concerns:
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
@@ -275,7 +275,7 @@ Archon uses true microservices architecture with clear separation of concerns:
 
 | Service        | Location             | Purpose                      | Key Features                                                       |
 | -------------- | -------------------- | ---------------------------- | ------------------------------------------------------------------ |
-| **Frontend**   | `archon-ui-main/`    | Web interface and dashboard  | React, TypeScript, TailwindCSS, Socket.IO client                   |
+| **Frontend**   | `Archivemind-ui-main/`    | Web interface and dashboard  | React, TypeScript, TailwindCSS, Socket.IO client                   |
 | **Server**     | `python/src/server/` | Core business logic and APIs | FastAPI, service layer, Socket.IO broadcasts, all ML/AI operations |
 | **MCP Server** | `python/src/mcp/`    | MCP protocol interface       | Lightweight HTTP wrapper, MCP tools, session management         |
 | **Agents**     | `python/src/agents/` | PydanticAI agent hosting     | Document and RAG agents, streaming responses                       |
@@ -296,13 +296,13 @@ Archon uses true microservices architecture with clear separation of concerns:
 
 ## 🔧 Configuring Custom Ports & Hostname
 
-By default, Archon services run on the following ports:
+By default, Archivemind services run on the following ports:
 
-- **archon-ui**: 3737
-- **archon-server**: 8181
-- **archon-mcp**: 8051
-- **archon-agents**: 8052
-- **archon-docs**: 3838 (optional)
+- **Archivemind-ui**: 3737
+- **Archivemind-server**: 8181
+- **Archivemind-mcp**: 8051
+- **Archivemind-agents**: 8052
+- **Archivemind-docs**: 3838 (optional)
 
 ### Changing Ports
 
@@ -310,23 +310,23 @@ To use custom ports, add these variables to your `.env` file:
 
 ```bash
 # Service Ports Configuration
-ARCHON_UI_PORT=3737
-ARCHON_SERVER_PORT=8181
-ARCHON_MCP_PORT=8051
-ARCHON_AGENTS_PORT=8052
-ARCHON_DOCS_PORT=3838
+ARCHIVEMIND_UI_PORT=3737
+ARCHIVEMIND_SERVER_PORT=8181
+ARCHIVEMIND_MCP_PORT=8051
+ARCHIVEMIND_AGENTS_PORT=8052
+ARCHIVEMIND_DOCS_PORT=3838
 ```
 
 Example: Running on different ports:
 
 ```bash
-ARCHON_SERVER_PORT=8282
-ARCHON_MCP_PORT=8151
+ARCHIVEMIND_SERVER_PORT=8282
+ARCHIVEMIND_MCP_PORT=8151
 ```
 
 ### Configuring Hostname
 
-By default, Archon uses `localhost` as the hostname. You can configure a custom hostname or IP address by setting the `HOST` variable in your `.env` file:
+By default, Archivemind uses `localhost` as the hostname. You can configure a custom hostname or IP address by setting the `HOST` variable in your `.env` file:
 
 ```bash
 # Hostname Configuration
@@ -334,20 +334,20 @@ HOST=localhost  # Default
 
 # Examples of custom hostnames:
 HOST=192.168.1.100     # Use specific IP address
-HOST=archon.local      # Use custom domain
+HOST=archivemind.local      # Use custom domain
 HOST=myserver.com      # Use public domain
 ```
 
 This is useful when:
 
-- Running Archon on a different machine and accessing it remotely
+- Running Archivemind on a different machine and accessing it remotely
 - Using a custom domain name for your installation
 - Deploying in a network environment where `localhost` isn't accessible
 
 After changing hostname or ports:
 
 1. Restart Docker containers: `docker compose down && docker compose --profile full up -d`
-2. Access the UI at: `http://${HOST}:${ARCHON_UI_PORT}`
+2. Access the UI at: `http://${HOST}:${ARCHIVEMIND_UI_PORT}`
 3. Update your AI client configuration with the new hostname and MCP port
 
 ## 🔧 Development
@@ -411,9 +411,9 @@ make clean      # Remove containers and volumes (asks for confirmation)
 ```bash
 # View logs using Docker Compose directly
 docker compose logs -f              # All services
-docker compose logs -f archon-server # API server
-docker compose logs -f archon-mcp    # MCP server
-docker compose logs -f archon-ui     # Frontend
+docker compose logs -f Archivemind-server # API server
+docker compose logs -f Archivemind-mcp    # MCP server
+docker compose logs -f Archivemind-ui     # Frontend
 ```
 
 **Note**: The backend services are configured with `--reload` flag in their uvicorn commands and have source code mounted as volumes for automatic hot reloading when you make changes.
@@ -460,7 +460,7 @@ newgrp docker
 
 - Check backend is running: `curl http://localhost:8181/health`
 - Verify port configuration in `.env`
-- For custom ports, ensure both `ARCHON_SERVER_PORT` and `VITE_ARCHON_SERVER_PORT` are set
+- For custom ports, ensure both `ARCHIVEMIND_SERVER_PORT` and `VITE_ARCHIVEMIND_SERVER_PORT` are set
 
 #### Docker Compose Hangs
 
@@ -483,13 +483,13 @@ docker system prune -f
 ## 📈 Progress
 
 <p align="center">
-  <a href="https://star-history.com/#coleam00/Archon&Date">
-    <img src="https://api.star-history.com/svg?repos=coleam00/Archon&type=Date" width="500" alt="Star History Chart">
+  <a href="https://star-history.com/#coleam00/Archivemind&Date">
+    <img src="https://api.star-history.com/svg?repos=coleam00/Archivemind&type=Date" width="500" alt="Star History Chart">
   </a>
 </p>
 
 ## 📄 License
 
-Archon Community License (ACL) v1.2 - see [LICENSE](LICENSE) file for details.
+Archivemind Community License (ACL) v1.2 - see [LICENSE](LICENSE) file for details.
 
-**TL;DR**: Archon is free, open, and hackable. Run it, fork it, share it - just don't sell it as-a-service without permission.
+**TL;DR**: Archivemind is free, open, and hackable. Run it, fork it, share it - just don't sell it as-a-service without permission.

@@ -1,11 +1,11 @@
 -- =====================================================
--- Archon Complete Database Setup
+-- Archivemind Complete Database Setup
 -- =====================================================
 -- This script combines all migrations into a single file
 -- for easy one-time database initialization
 --
 -- Run this script in your Supabase SQL Editor to set up
--- the complete Archon database schema and initial data
+-- the complete Archivemind database schema and initial data
 -- =====================================================
 
 -- =====================================================
@@ -22,7 +22,7 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 -- Credentials and Configuration Management Table
 -- This table stores both encrypted sensitive data and plain configuration settings
-CREATE TABLE IF NOT EXISTS archon_settings (
+CREATE TABLE IF NOT EXISTS archivemind_settings (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     key VARCHAR(255) UNIQUE NOT NULL,
     value TEXT,                    -- For plain text config values
@@ -35,8 +35,8 @@ CREATE TABLE IF NOT EXISTS archon_settings (
 );
 
 -- Create indexes for faster lookups
-CREATE INDEX IF NOT EXISTS idx_archon_settings_key ON archon_settings(key);
-CREATE INDEX IF NOT EXISTS idx_archon_settings_category ON archon_settings(category);
+CREATE INDEX IF NOT EXISTS idx_archivemind_settings_key ON archivemind_settings(key);
+CREATE INDEX IF NOT EXISTS idx_archivemind_settings_category ON archivemind_settings(category);
 
 -- Create trigger to automatically update updated_at timestamp
 CREATE OR REPLACE FUNCTION update_updated_at_column()
@@ -47,18 +47,18 @@ BEGIN
 END;
 $$ language 'plpgsql';
 
-CREATE TRIGGER update_archon_settings_updated_at
-    BEFORE UPDATE ON archon_settings
+CREATE TRIGGER update_archivemind_settings_updated_at
+    BEFORE UPDATE ON archivemind_settings
     FOR EACH ROW
     EXECUTE FUNCTION update_updated_at_column();
 
 -- Create RLS (Row Level Security) policies for settings
-ALTER TABLE archon_settings ENABLE ROW LEVEL SECURITY;
+ALTER TABLE archivemind_settings ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Allow service role full access" ON archon_settings
+CREATE POLICY "Allow service role full access" ON archivemind_settings
     FOR ALL USING (auth.role() = 'service_role');
 
-CREATE POLICY "Allow authenticated users to read and update" ON archon_settings
+CREATE POLICY "Allow authenticated users to read and update" ON archivemind_settings
     FOR ALL TO authenticated
     USING (true);
 
@@ -67,14 +67,14 @@ CREATE POLICY "Allow authenticated users to read and update" ON archon_settings
 -- =====================================================
 
 -- Server Configuration
-INSERT INTO archon_settings (key, value, is_encrypted, category, description) VALUES
+INSERT INTO archivemind_settings (key, value, is_encrypted, category, description) VALUES
 ('MCP_TRANSPORT', 'dual', false, 'server_config', 'MCP server transport mode - sse (web clients), stdio (IDE clients), or dual (both)'),
 ('HOST', 'localhost', false, 'server_config', 'Host to bind to if using sse as the transport (leave empty if using stdio)'),
 ('PORT', '8051', false, 'server_config', 'Port to listen on if using sse as the transport (leave empty if using stdio)'),
 ('MODEL_CHOICE', 'gpt-4.1-nano', false, 'rag_strategy', 'The LLM you want to use for summaries and contextual embeddings. Generally this is a very cheap and fast LLM like gpt-4.1-nano');
 
 -- RAG Strategy Configuration (all default to true)
-INSERT INTO archon_settings (key, value, is_encrypted, category, description) VALUES
+INSERT INTO archivemind_settings (key, value, is_encrypted, category, description) VALUES
 ('USE_CONTEXTUAL_EMBEDDINGS', 'false', false, 'rag_strategy', 'Enhances embeddings with contextual information for better retrieval'),
 ('CONTEXTUAL_EMBEDDINGS_MAX_WORKERS', '3', false, 'rag_strategy', 'Maximum parallel workers for contextual embedding generation (1-10)'),
 ('USE_HYBRID_SEARCH', 'true', false, 'rag_strategy', 'Combines vector similarity search with keyword search for better results'),
@@ -82,23 +82,23 @@ INSERT INTO archon_settings (key, value, is_encrypted, category, description) VA
 ('USE_RERANKING', 'true', false, 'rag_strategy', 'Applies cross-encoder reranking to improve search result relevance');
 
 -- Monitoring Configuration
-INSERT INTO archon_settings (key, value, is_encrypted, category, description) VALUES
+INSERT INTO archivemind_settings (key, value, is_encrypted, category, description) VALUES
 ('LOGFIRE_ENABLED', 'true', false, 'monitoring', 'Enable or disable Pydantic Logfire logging and observability platform'),
 ('PROJECTS_ENABLED', 'true', false, 'features', 'Enable or disable Projects and Tasks functionality');
 
 -- Placeholder for sensitive credentials (to be added via Settings UI)
-INSERT INTO archon_settings (key, encrypted_value, is_encrypted, category, description) VALUES
+INSERT INTO archivemind_settings (key, encrypted_value, is_encrypted, category, description) VALUES
 ('OPENAI_API_KEY', NULL, true, 'api_keys', 'OpenAI API Key for embedding model (text-embedding-3-small). Get from: https://help.openai.com/en/articles/4936850-where-do-i-find-my-openai-api-key');
 
 -- LLM Provider configuration settings
-INSERT INTO archon_settings (key, value, is_encrypted, category, description) VALUES
+INSERT INTO archivemind_settings (key, value, is_encrypted, category, description) VALUES
 ('LLM_PROVIDER', 'openai', false, 'rag_strategy', 'LLM provider to use: openai, ollama, or google'),
 ('LLM_BASE_URL', NULL, false, 'rag_strategy', 'Custom base URL for LLM provider (mainly for Ollama, e.g., http://localhost:11434/v1)'),
 ('EMBEDDING_MODEL', 'text-embedding-3-small', false, 'rag_strategy', 'Embedding model for vector search and similarity matching (required for all embedding operations)')
 ON CONFLICT (key) DO NOTHING;
 
 -- Add provider API key placeholders
-INSERT INTO archon_settings (key, encrypted_value, is_encrypted, category, description) VALUES
+INSERT INTO archivemind_settings (key, encrypted_value, is_encrypted, category, description) VALUES
 ('GOOGLE_API_KEY', NULL, true, 'api_keys', 'Google API Key for Gemini models. Get from: https://aistudio.google.com/apikey')
 ON CONFLICT (key) DO NOTHING;
 
@@ -106,7 +106,7 @@ ON CONFLICT (key) DO NOTHING;
 -- Adds configurable settings for the code extraction service
 
 -- Insert Code Extraction Configuration Settings
-INSERT INTO archon_settings (key, value, is_encrypted, category, description) VALUES
+INSERT INTO archivemind_settings (key, value, is_encrypted, category, description) VALUES
 -- Length Settings
 ('MIN_CODE_BLOCK_LENGTH', '250', false, 'code_extraction', 'Base minimum length for code blocks in characters'),
 ('MAX_CODE_BLOCK_LENGTH', '5000', false, 'code_extraction', 'Maximum length before stopping code block extension in characters'),
@@ -131,7 +131,7 @@ INSERT INTO archon_settings (key, value, is_encrypted, category, description) VA
 ON CONFLICT (key) DO NOTHING;
 
 -- Crawling Performance Settings (from add_performance_settings.sql)
-INSERT INTO archon_settings (key, value, is_encrypted, category, description) VALUES
+INSERT INTO archivemind_settings (key, value, is_encrypted, category, description) VALUES
 ('CRAWL_BATCH_SIZE', '50', false, 'rag_strategy', 'Number of URLs to crawl in parallel per batch (10-100)'),
 ('CRAWL_MAX_CONCURRENT', '10', false, 'rag_strategy', 'Maximum concurrent browser sessions for crawling (1-20)'),
 ('CRAWL_WAIT_STRATEGY', 'domcontentloaded', false, 'rag_strategy', 'When to consider page loaded: domcontentloaded, networkidle, or load'),
@@ -140,7 +140,7 @@ INSERT INTO archon_settings (key, value, is_encrypted, category, description) VA
 ON CONFLICT (key) DO NOTHING;
 
 -- Document Storage Performance Settings (from add_performance_settings.sql and optimize_batch_sizes.sql)
-INSERT INTO archon_settings (key, value, is_encrypted, category, description) VALUES
+INSERT INTO archivemind_settings (key, value, is_encrypted, category, description) VALUES
 ('DOCUMENT_STORAGE_BATCH_SIZE', '100', false, 'rag_strategy', 'Number of document chunks to process per batch (50-200) - increased for better performance'),
 ('EMBEDDING_BATCH_SIZE', '200', false, 'rag_strategy', 'Number of embeddings to create per API call (100-500) - increased for better throughput'),
 ('DELETE_BATCH_SIZE', '100', false, 'rag_strategy', 'Number of URLs to delete in one database operation (50-200) - increased for better performance'),
@@ -150,7 +150,7 @@ ON CONFLICT (key) DO UPDATE SET
     description = EXCLUDED.description;
 
 -- Advanced Performance Settings (from add_performance_settings.sql and optimize_batch_sizes.sql)
-INSERT INTO archon_settings (key, value, is_encrypted, category, description) VALUES
+INSERT INTO archivemind_settings (key, value, is_encrypted, category, description) VALUES
 ('MEMORY_THRESHOLD_PERCENT', '80', false, 'rag_strategy', 'Memory usage threshold for crawler dispatcher (50-90)'),
 ('DISPATCHER_CHECK_INTERVAL', '0.5', false, 'rag_strategy', 'How often to check memory usage in seconds (0.1-2.0)'),
 ('CODE_EXTRACTION_BATCH_SIZE', '40', false, 'rag_strategy', 'Number of code blocks to extract per batch (20-100) - increased for better performance'),
@@ -161,14 +161,14 @@ ON CONFLICT (key) DO UPDATE SET
     description = EXCLUDED.description;
 
 -- Add a comment to document when this migration was added
-COMMENT ON TABLE archon_settings IS 'Stores application configuration including API keys, RAG settings, and code extraction parameters';
+COMMENT ON TABLE archivemind_settings IS 'Stores application configuration including API keys, RAG settings, and code extraction parameters';
 
 -- =====================================================
 -- SECTION 4: KNOWLEDGE BASE TABLES
 -- =====================================================
 
 -- Create the sources table
-CREATE TABLE IF NOT EXISTS archon_sources (
+CREATE TABLE IF NOT EXISTS archivemind_sources (
     source_id TEXT PRIMARY KEY,
     source_url TEXT,
     source_display_name TEXT,
@@ -181,21 +181,21 @@ CREATE TABLE IF NOT EXISTS archon_sources (
 );
 
 -- Create indexes for better query performance
-CREATE INDEX IF NOT EXISTS idx_archon_sources_title ON archon_sources(title);
-CREATE INDEX IF NOT EXISTS idx_archon_sources_url ON archon_sources(source_url);
-CREATE INDEX IF NOT EXISTS idx_archon_sources_display_name ON archon_sources(source_display_name);
-CREATE INDEX IF NOT EXISTS idx_archon_sources_metadata ON archon_sources USING GIN(metadata);
-CREATE INDEX IF NOT EXISTS idx_archon_sources_knowledge_type ON archon_sources((metadata->>'knowledge_type'));
+CREATE INDEX IF NOT EXISTS idx_archivemind_sources_title ON archivemind_sources(title);
+CREATE INDEX IF NOT EXISTS idx_archivemind_sources_url ON archivemind_sources(source_url);
+CREATE INDEX IF NOT EXISTS idx_archivemind_sources_display_name ON archivemind_sources(source_display_name);
+CREATE INDEX IF NOT EXISTS idx_archivemind_sources_metadata ON archivemind_sources USING GIN(metadata);
+CREATE INDEX IF NOT EXISTS idx_archivemind_sources_knowledge_type ON archivemind_sources((metadata->>'knowledge_type'));
 
 -- Add comments to document the columns
-COMMENT ON COLUMN archon_sources.source_id IS 'Unique hash identifier for the source (16-char SHA256 hash of URL)';
-COMMENT ON COLUMN archon_sources.source_url IS 'The original URL that was crawled to create this source';
-COMMENT ON COLUMN archon_sources.source_display_name IS 'Human-readable name for UI display (e.g., "GitHub - microsoft/typescript")';
-COMMENT ON COLUMN archon_sources.title IS 'Descriptive title for the source (e.g., "Pydantic AI API Reference")';
-COMMENT ON COLUMN archon_sources.metadata IS 'JSONB field storing knowledge_type, tags, and other metadata';
+COMMENT ON COLUMN archivemind_sources.source_id IS 'Unique hash identifier for the source (16-char SHA256 hash of URL)';
+COMMENT ON COLUMN archivemind_sources.source_url IS 'The original URL that was crawled to create this source';
+COMMENT ON COLUMN archivemind_sources.source_display_name IS 'Human-readable name for UI display (e.g., "GitHub - microsoft/typescript")';
+COMMENT ON COLUMN archivemind_sources.title IS 'Descriptive title for the source (e.g., "Pydantic AI API Reference")';
+COMMENT ON COLUMN archivemind_sources.metadata IS 'JSONB field storing knowledge_type, tags, and other metadata';
 
 -- Create the documentation chunks table
-CREATE TABLE IF NOT EXISTS archon_crawled_pages (
+CREATE TABLE IF NOT EXISTS archivemind_crawled_pages (
     id BIGSERIAL PRIMARY KEY,
     url VARCHAR NOT NULL,
     chunk_number INTEGER NOT NULL,
@@ -209,16 +209,16 @@ CREATE TABLE IF NOT EXISTS archon_crawled_pages (
     UNIQUE(url, chunk_number),
 
     -- Add foreign key constraint to sources table
-    FOREIGN KEY (source_id) REFERENCES archon_sources(source_id)
+    FOREIGN KEY (source_id) REFERENCES archivemind_sources(source_id)
 );
 
 -- Create indexes for better performance
-CREATE INDEX ON archon_crawled_pages USING ivfflat (embedding vector_cosine_ops);
-CREATE INDEX idx_archon_crawled_pages_metadata ON archon_crawled_pages USING GIN (metadata);
-CREATE INDEX idx_archon_crawled_pages_source_id ON archon_crawled_pages (source_id);
+CREATE INDEX ON archivemind_crawled_pages USING ivfflat (embedding vector_cosine_ops);
+CREATE INDEX idx_archivemind_crawled_pages_metadata ON archivemind_crawled_pages USING GIN (metadata);
+CREATE INDEX idx_archivemind_crawled_pages_source_id ON archivemind_crawled_pages (source_id);
 
 -- Create the code_examples table
-CREATE TABLE IF NOT EXISTS archon_code_examples (
+CREATE TABLE IF NOT EXISTS archivemind_code_examples (
     id BIGSERIAL PRIMARY KEY,
     url VARCHAR NOT NULL,
     chunk_number INTEGER NOT NULL,
@@ -233,20 +233,20 @@ CREATE TABLE IF NOT EXISTS archon_code_examples (
     UNIQUE(url, chunk_number),
 
     -- Add foreign key constraint to sources table
-    FOREIGN KEY (source_id) REFERENCES archon_sources(source_id)
+    FOREIGN KEY (source_id) REFERENCES archivemind_sources(source_id)
 );
 
 -- Create indexes for better performance
-CREATE INDEX ON archon_code_examples USING ivfflat (embedding vector_cosine_ops);
-CREATE INDEX idx_archon_code_examples_metadata ON archon_code_examples USING GIN (metadata);
-CREATE INDEX idx_archon_code_examples_source_id ON archon_code_examples (source_id);
+CREATE INDEX ON archivemind_code_examples USING ivfflat (embedding vector_cosine_ops);
+CREATE INDEX idx_archivemind_code_examples_metadata ON archivemind_code_examples USING GIN (metadata);
+CREATE INDEX idx_archivemind_code_examples_source_id ON archivemind_code_examples (source_id);
 
 -- =====================================================
 -- SECTION 5: SEARCH FUNCTIONS
 -- =====================================================
 
 -- Create a function to search for documentation chunks
-CREATE OR REPLACE FUNCTION match_archon_crawled_pages (
+CREATE OR REPLACE FUNCTION match_archivemind_crawled_pages (
   query_embedding VECTOR(1536),
   match_count INT DEFAULT 10,
   filter JSONB DEFAULT '{}'::jsonb,
@@ -272,17 +272,17 @@ BEGIN
     content,
     metadata,
     source_id,
-    1 - (archon_crawled_pages.embedding <=> query_embedding) AS similarity
-  FROM archon_crawled_pages
+    1 - (archivemind_crawled_pages.embedding <=> query_embedding) AS similarity
+  FROM archivemind_crawled_pages
   WHERE metadata @> filter
     AND (source_filter IS NULL OR source_id = source_filter)
-  ORDER BY archon_crawled_pages.embedding <=> query_embedding
+  ORDER BY archivemind_crawled_pages.embedding <=> query_embedding
   LIMIT match_count;
 END;
 $$;
 
 -- Create a function to search for code examples
-CREATE OR REPLACE FUNCTION match_archon_code_examples (
+CREATE OR REPLACE FUNCTION match_archivemind_code_examples (
   query_embedding VECTOR(1536),
   match_count INT DEFAULT 10,
   filter JSONB DEFAULT '{}'::jsonb,
@@ -310,11 +310,11 @@ BEGIN
     summary,
     metadata,
     source_id,
-    1 - (archon_code_examples.embedding <=> query_embedding) AS similarity
-  FROM archon_code_examples
+    1 - (archivemind_code_examples.embedding <=> query_embedding) AS similarity
+  FROM archivemind_code_examples
   WHERE metadata @> filter
     AND (source_filter IS NULL OR source_id = source_filter)
-  ORDER BY archon_code_examples.embedding <=> query_embedding
+  ORDER BY archivemind_code_examples.embedding <=> query_embedding
   LIMIT match_count;
 END;
 $$;
@@ -324,25 +324,25 @@ $$;
 -- =====================================================
 
 -- Enable RLS on the knowledge base tables
-ALTER TABLE archon_crawled_pages ENABLE ROW LEVEL SECURITY;
-ALTER TABLE archon_sources ENABLE ROW LEVEL SECURITY;
-ALTER TABLE archon_code_examples ENABLE ROW LEVEL SECURITY;
+ALTER TABLE archivemind_crawled_pages ENABLE ROW LEVEL SECURITY;
+ALTER TABLE archivemind_sources ENABLE ROW LEVEL SECURITY;
+ALTER TABLE archivemind_code_examples ENABLE ROW LEVEL SECURITY;
 
 -- Create policies that allow anyone to read
-CREATE POLICY "Allow public read access to archon_crawled_pages"
-  ON archon_crawled_pages
+CREATE POLICY "Allow public read access to archivemind_crawled_pages"
+  ON archivemind_crawled_pages
   FOR SELECT
   TO public
   USING (true);
 
-CREATE POLICY "Allow public read access to archon_sources"
-  ON archon_sources
+CREATE POLICY "Allow public read access to archivemind_sources"
+  ON archivemind_sources
   FOR SELECT
   TO public
   USING (true);
 
-CREATE POLICY "Allow public read access to archon_code_examples"
-  ON archon_code_examples
+CREATE POLICY "Allow public read access to archivemind_code_examples"
+  ON archivemind_code_examples
   FOR SELECT
   TO public
   USING (true);
@@ -363,7 +363,7 @@ END $$;
 -- No longer using enum to support flexible agent assignments
 
 -- Projects table
-CREATE TABLE IF NOT EXISTS archon_projects (
+CREATE TABLE IF NOT EXISTS archivemind_projects (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   title TEXT NOT NULL,
   description TEXT DEFAULT '',
@@ -377,10 +377,10 @@ CREATE TABLE IF NOT EXISTS archon_projects (
 );
 
 -- Tasks table
-CREATE TABLE IF NOT EXISTS archon_tasks (
+CREATE TABLE IF NOT EXISTS archivemind_tasks (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  project_id UUID REFERENCES archon_projects(id) ON DELETE CASCADE,
-  parent_task_id UUID REFERENCES archon_tasks(id) ON DELETE CASCADE,
+  project_id UUID REFERENCES archivemind_projects(id) ON DELETE CASCADE,
+  parent_task_id UUID REFERENCES archivemind_tasks(id) ON DELETE CASCADE,
   title TEXT NOT NULL,
   description TEXT DEFAULT '',
   status task_status DEFAULT 'todo',
@@ -397,9 +397,9 @@ CREATE TABLE IF NOT EXISTS archon_tasks (
 );
 
 -- Project Sources junction table for many-to-many relationship
-CREATE TABLE IF NOT EXISTS archon_project_sources (
+CREATE TABLE IF NOT EXISTS archivemind_project_sources (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  project_id UUID REFERENCES archon_projects(id) ON DELETE CASCADE,
+  project_id UUID REFERENCES archivemind_projects(id) ON DELETE CASCADE,
   source_id TEXT NOT NULL, -- References sources in the knowledge base
   linked_at TIMESTAMPTZ DEFAULT NOW(),
   created_by TEXT DEFAULT 'system',
@@ -409,10 +409,10 @@ CREATE TABLE IF NOT EXISTS archon_project_sources (
 );
 
 -- Document Versions table for version control of project JSONB fields only
-CREATE TABLE IF NOT EXISTS archon_document_versions (
+CREATE TABLE IF NOT EXISTS archivemind_document_versions (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  project_id UUID REFERENCES archon_projects(id) ON DELETE CASCADE,
-  task_id UUID REFERENCES archon_tasks(id) ON DELETE CASCADE, -- DEPRECATED: No longer used, kept for historical data
+  project_id UUID REFERENCES archivemind_projects(id) ON DELETE CASCADE,
+  task_id UUID REFERENCES archivemind_tasks(id) ON DELETE CASCADE, -- DEPRECATED: No longer used, kept for historical data
   field_name TEXT NOT NULL, -- 'docs', 'features', 'data', 'prd' (task fields no longer versioned)
   version_number INTEGER NOT NULL,
   content JSONB NOT NULL, -- Full snapshot of the field content
@@ -431,27 +431,27 @@ CREATE TABLE IF NOT EXISTS archon_document_versions (
 );
 
 -- Create indexes for better performance
-CREATE INDEX IF NOT EXISTS idx_archon_tasks_project_id ON archon_tasks(project_id);
-CREATE INDEX IF NOT EXISTS idx_archon_tasks_status ON archon_tasks(status);
-CREATE INDEX IF NOT EXISTS idx_archon_tasks_assignee ON archon_tasks(assignee);
-CREATE INDEX IF NOT EXISTS idx_archon_tasks_order ON archon_tasks(task_order);
-CREATE INDEX IF NOT EXISTS idx_archon_tasks_archived ON archon_tasks(archived);
-CREATE INDEX IF NOT EXISTS idx_archon_tasks_archived_at ON archon_tasks(archived_at);
-CREATE INDEX IF NOT EXISTS idx_archon_project_sources_project_id ON archon_project_sources(project_id);
-CREATE INDEX IF NOT EXISTS idx_archon_project_sources_source_id ON archon_project_sources(source_id);
-CREATE INDEX IF NOT EXISTS idx_archon_document_versions_project_id ON archon_document_versions(project_id);
-CREATE INDEX IF NOT EXISTS idx_archon_document_versions_task_id ON archon_document_versions(task_id);
-CREATE INDEX IF NOT EXISTS idx_archon_document_versions_field_name ON archon_document_versions(field_name);
-CREATE INDEX IF NOT EXISTS idx_archon_document_versions_version_number ON archon_document_versions(version_number);
-CREATE INDEX IF NOT EXISTS idx_archon_document_versions_created_at ON archon_document_versions(created_at);
+CREATE INDEX IF NOT EXISTS idx_archivemind_tasks_project_id ON archivemind_tasks(project_id);
+CREATE INDEX IF NOT EXISTS idx_archivemind_tasks_status ON archivemind_tasks(status);
+CREATE INDEX IF NOT EXISTS idx_archivemind_tasks_assignee ON archivemind_tasks(assignee);
+CREATE INDEX IF NOT EXISTS idx_archivemind_tasks_order ON archivemind_tasks(task_order);
+CREATE INDEX IF NOT EXISTS idx_archivemind_tasks_archived ON archivemind_tasks(archived);
+CREATE INDEX IF NOT EXISTS idx_archivemind_tasks_archived_at ON archivemind_tasks(archived_at);
+CREATE INDEX IF NOT EXISTS idx_archivemind_project_sources_project_id ON archivemind_project_sources(project_id);
+CREATE INDEX IF NOT EXISTS idx_archivemind_project_sources_source_id ON archivemind_project_sources(source_id);
+CREATE INDEX IF NOT EXISTS idx_archivemind_document_versions_project_id ON archivemind_document_versions(project_id);
+CREATE INDEX IF NOT EXISTS idx_archivemind_document_versions_task_id ON archivemind_document_versions(task_id);
+CREATE INDEX IF NOT EXISTS idx_archivemind_document_versions_field_name ON archivemind_document_versions(field_name);
+CREATE INDEX IF NOT EXISTS idx_archivemind_document_versions_version_number ON archivemind_document_versions(version_number);
+CREATE INDEX IF NOT EXISTS idx_archivemind_document_versions_created_at ON archivemind_document_versions(created_at);
 
 -- Apply triggers to tables
-CREATE OR REPLACE TRIGGER update_archon_projects_updated_at
-    BEFORE UPDATE ON archon_projects
+CREATE OR REPLACE TRIGGER update_archivemind_projects_updated_at
+    BEFORE UPDATE ON archivemind_projects
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
-CREATE OR REPLACE TRIGGER update_archon_tasks_updated_at
-    BEFORE UPDATE ON archon_tasks
+CREATE OR REPLACE TRIGGER update_archivemind_tasks_updated_at
+    BEFORE UPDATE ON archivemind_tasks
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 -- Soft delete function for tasks
@@ -465,7 +465,7 @@ DECLARE
 BEGIN
     -- Check if task exists and is not already archived
     SELECT EXISTS(
-        SELECT 1 FROM archon_tasks
+        SELECT 1 FROM archivemind_tasks
         WHERE id = task_id_param AND archived = FALSE
     ) INTO task_exists;
 
@@ -474,7 +474,7 @@ BEGIN
     END IF;
 
     -- Archive the task
-    UPDATE archon_tasks
+    UPDATE archivemind_tasks
     SET
         archived = TRUE,
         archived_at = NOW(),
@@ -483,7 +483,7 @@ BEGIN
     WHERE id = task_id_param;
 
     -- Also archive all subtasks
-    UPDATE archon_tasks
+    UPDATE archivemind_tasks
     SET
         archived = TRUE,
         archived_at = NOW(),
@@ -496,25 +496,25 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Add comments to document the soft delete fields
-COMMENT ON COLUMN archon_tasks.assignee IS 'The agent or user assigned to this task. Can be any valid agent name or "User"';
-COMMENT ON COLUMN archon_tasks.archived IS 'Soft delete flag - TRUE if task is archived/deleted';
-COMMENT ON COLUMN archon_tasks.archived_at IS 'Timestamp when task was archived';
-COMMENT ON COLUMN archon_tasks.archived_by IS 'User/system that archived the task';
+COMMENT ON COLUMN archivemind_tasks.assignee IS 'The agent or user assigned to this task. Can be any valid agent name or "User"';
+COMMENT ON COLUMN archivemind_tasks.archived IS 'Soft delete flag - TRUE if task is archived/deleted';
+COMMENT ON COLUMN archivemind_tasks.archived_at IS 'Timestamp when task was archived';
+COMMENT ON COLUMN archivemind_tasks.archived_by IS 'User/system that archived the task';
 
 -- Add comments for versioning table
-COMMENT ON TABLE archon_document_versions IS 'Version control for JSONB fields in projects only - task versioning has been removed to simplify MCP operations';
-COMMENT ON COLUMN archon_document_versions.field_name IS 'Name of JSONB field being versioned (docs, features, data) - task fields and prd removed as unused';
-COMMENT ON COLUMN archon_document_versions.content IS 'Full snapshot of field content at this version';
-COMMENT ON COLUMN archon_document_versions.change_type IS 'Type of change: create, update, delete, restore, backup';
-COMMENT ON COLUMN archon_document_versions.document_id IS 'For docs arrays, the specific document ID that was changed';
-COMMENT ON COLUMN archon_document_versions.task_id IS 'DEPRECATED: No longer used for new versions, kept for historical task version data';
+COMMENT ON TABLE archivemind_document_versions IS 'Version control for JSONB fields in projects only - task versioning has been removed to simplify MCP operations';
+COMMENT ON COLUMN archivemind_document_versions.field_name IS 'Name of JSONB field being versioned (docs, features, data) - task fields and prd removed as unused';
+COMMENT ON COLUMN archivemind_document_versions.content IS 'Full snapshot of field content at this version';
+COMMENT ON COLUMN archivemind_document_versions.change_type IS 'Type of change: create, update, delete, restore, backup';
+COMMENT ON COLUMN archivemind_document_versions.document_id IS 'For docs arrays, the specific document ID that was changed';
+COMMENT ON COLUMN archivemind_document_versions.task_id IS 'DEPRECATED: No longer used for new versions, kept for historical task version data';
 
 -- =====================================================
 -- SECTION 8: PROMPTS TABLE
 -- =====================================================
 
 -- Prompts table for managing agent system prompts
-CREATE TABLE IF NOT EXISTS archon_prompts (
+CREATE TABLE IF NOT EXISTS archivemind_prompts (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   prompt_name TEXT UNIQUE NOT NULL,
   prompt TEXT NOT NULL,
@@ -524,11 +524,11 @@ CREATE TABLE IF NOT EXISTS archon_prompts (
 );
 
 -- Create index for faster lookups
-CREATE INDEX IF NOT EXISTS idx_archon_prompts_name ON archon_prompts(prompt_name);
+CREATE INDEX IF NOT EXISTS idx_archivemind_prompts_name ON archivemind_prompts(prompt_name);
 
 -- Add trigger to automatically update updated_at timestamp
-CREATE OR REPLACE TRIGGER update_archon_prompts_updated_at
-    BEFORE UPDATE ON archon_prompts
+CREATE OR REPLACE TRIGGER update_archivemind_prompts_updated_at
+    BEFORE UPDATE ON archivemind_prompts
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 -- =====================================================
@@ -536,46 +536,46 @@ CREATE OR REPLACE TRIGGER update_archon_prompts_updated_at
 -- =====================================================
 
 -- Enable Row Level Security (RLS) for all tables
-ALTER TABLE archon_projects ENABLE ROW LEVEL SECURITY;
-ALTER TABLE archon_tasks ENABLE ROW LEVEL SECURITY;
-ALTER TABLE archon_project_sources ENABLE ROW LEVEL SECURITY;
-ALTER TABLE archon_document_versions ENABLE ROW LEVEL SECURITY;
-ALTER TABLE archon_prompts ENABLE ROW LEVEL SECURITY;
+ALTER TABLE archivemind_projects ENABLE ROW LEVEL SECURITY;
+ALTER TABLE archivemind_tasks ENABLE ROW LEVEL SECURITY;
+ALTER TABLE archivemind_project_sources ENABLE ROW LEVEL SECURITY;
+ALTER TABLE archivemind_document_versions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE archivemind_prompts ENABLE ROW LEVEL SECURITY;
 
 -- Create RLS policies for service role (full access)
-CREATE POLICY "Allow service role full access to archon_projects" ON archon_projects
+CREATE POLICY "Allow service role full access to archivemind_projects" ON archivemind_projects
     FOR ALL USING (auth.role() = 'service_role');
 
-CREATE POLICY "Allow service role full access to archon_tasks" ON archon_tasks
+CREATE POLICY "Allow service role full access to archivemind_tasks" ON archivemind_tasks
     FOR ALL USING (auth.role() = 'service_role');
 
-CREATE POLICY "Allow service role full access to archon_project_sources" ON archon_project_sources
+CREATE POLICY "Allow service role full access to archivemind_project_sources" ON archivemind_project_sources
     FOR ALL USING (auth.role() = 'service_role');
 
-CREATE POLICY "Allow service role full access to archon_document_versions" ON archon_document_versions
+CREATE POLICY "Allow service role full access to archivemind_document_versions" ON archivemind_document_versions
     FOR ALL USING (auth.role() = 'service_role');
 
-CREATE POLICY "Allow service role full access to archon_prompts" ON archon_prompts
+CREATE POLICY "Allow service role full access to archivemind_prompts" ON archivemind_prompts
     FOR ALL USING (auth.role() = 'service_role');
 
 -- Create RLS policies for authenticated users
-CREATE POLICY "Allow authenticated users to read and update archon_projects" ON archon_projects
+CREATE POLICY "Allow authenticated users to read and update archivemind_projects" ON archivemind_projects
     FOR ALL TO authenticated
     USING (true);
 
-CREATE POLICY "Allow authenticated users to read and update archon_tasks" ON archon_tasks
+CREATE POLICY "Allow authenticated users to read and update archivemind_tasks" ON archivemind_tasks
     FOR ALL TO authenticated
     USING (true);
 
-CREATE POLICY "Allow authenticated users to read and update archon_project_sources" ON archon_project_sources
+CREATE POLICY "Allow authenticated users to read and update archivemind_project_sources" ON archivemind_project_sources
     FOR ALL TO authenticated
     USING (true);
 
-CREATE POLICY "Allow authenticated users to read archon_document_versions" ON archon_document_versions
+CREATE POLICY "Allow authenticated users to read archivemind_document_versions" ON archivemind_document_versions
     FOR SELECT TO authenticated
     USING (true);
 
-CREATE POLICY "Allow authenticated users to read archon_prompts" ON archon_prompts
+CREATE POLICY "Allow authenticated users to read archivemind_prompts" ON archivemind_prompts
     FOR SELECT TO authenticated
     USING (true);
 
@@ -584,7 +584,7 @@ CREATE POLICY "Allow authenticated users to read archon_prompts" ON archon_promp
 -- =====================================================
 
 -- Seed with default prompts for each content type
-INSERT INTO archon_prompts (prompt_name, prompt, description) VALUES
+INSERT INTO archivemind_prompts (prompt_name, prompt, description) VALUES
 ('document_builder', 'SYSTEM PROMPT – Document-Builder Agent
 
 ⸻
@@ -793,7 +793,7 @@ Remember: Create production-ready data models.', 'System prompt for creating dat
 -- =====================================================
 -- SETUP COMPLETE
 -- =====================================================
--- Your Archon database is now fully configured!
+-- Your Archivemind database is now fully configured!
 --
 -- Next steps:
 -- 1. Add your OpenAI API key via the Settings UI

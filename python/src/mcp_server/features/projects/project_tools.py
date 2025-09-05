@@ -1,5 +1,5 @@
 """
-Simple project management tools for Archon MCP Server.
+Simple project management tools for ArchiveMind MCP Server.
 
 Provides separate, focused tools for each project operation.
 No complex PRP examples - just straightforward project management.

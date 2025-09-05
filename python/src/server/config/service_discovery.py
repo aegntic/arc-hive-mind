@@ -29,25 +29,25 @@ class ServiceDiscovery:
 
     def __init__(self):
         # Get ports during initialization
-        server_port = os.getenv("ARCHON_SERVER_PORT")
-        mcp_port = os.getenv("ARCHON_MCP_PORT")
-        agents_port = os.getenv("ARCHON_AGENTS_PORT")
+        server_port = os.getenv("ARCHIVEMIND_SERVER_PORT")
+        mcp_port = os.getenv("ARCHIVEMIND_MCP_PORT")
+        agents_port = os.getenv("ARCHIVEMIND_AGENTS_PORT")
 
         if not server_port:
             raise ValueError(
-                "ARCHON_SERVER_PORT environment variable is required. "
+                "ARCHIVEMIND_SERVER_PORT environment variable is required. "
                 "Please set it in your .env file or environment. "
                 "Default value: 8181"
             )
         if not mcp_port:
             raise ValueError(
-                "ARCHON_MCP_PORT environment variable is required. "
+                "ARCHIVEMIND_MCP_PORT environment variable is required. "
                 "Please set it in your .env file or environment. "
                 "Default value: 8051"
             )
         if not agents_port:
             raise ValueError(
-                "ARCHON_AGENTS_PORT environment variable is required. "
+                "ARCHIVEMIND_AGENTS_PORT environment variable is required. "
                 "Please set it in your .env file or environment. "
                 "Default value: 8052"
             )
@@ -63,12 +63,12 @@ class ServiceDiscovery:
 
     # Service name mappings
     SERVICE_NAMES = {
-        "api": "archon-server",
-        "mcp": "archon-mcp",
-        "agents": "archon-agents",
-        "archon-server": "archon-server",
-        "archon-mcp": "archon-mcp",
-        "archon-agents": "archon-agents",
+        "api": "archivemind-server",
+        "mcp": "archivemind-mcp",
+        "agents": "archivemind-agents",
+        "archivemind-server": "archivemind-server",
+        "archivemind-mcp": "archivemind-mcp",
+        "archivemind-agents": "archivemind-agents",
     }
 
     @staticmethod
@@ -90,7 +90,7 @@ class ServiceDiscovery:
             protocol: Protocol to use (default: "http")
 
         Returns:
-            Full service URL (e.g., "http://archon-api:8080")
+            Full service URL (e.g., "http://archivemind-api:8080")
         """
         cache_key = f"{protocol}://{service}"
         if cache_key in self._cache:
@@ -174,7 +174,7 @@ class ServiceDiscovery:
         return {
             service: self.get_service_url(service)
             for service in self.SERVICE_NAMES.keys()
-            if not service.startswith("archon-")  # Skip duplicates
+            if not service.startswith("archivemind-")  # Skip duplicates
         }
 
     @property

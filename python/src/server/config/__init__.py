@@ -1,8 +1,8 @@
 """
-Configuration module for Archon
+Configuration module for ArchiveMind
 
 This module provides configuration management and service discovery
-for the Archon microservices architecture.
+for the ArchiveMind microservices architecture.
 """
 
 from .service_discovery import (

@@ -1,5 +1,5 @@
 """
-Simple document management tools for Archon MCP Server.
+Simple document management tools for ArchiveMind MCP Server.
 
 Provides separate, focused tools for each document operation.
 Supports various document types including specs, designs, notes, and PRPs.

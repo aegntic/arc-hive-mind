@@ -1,5 +1,5 @@
 """
-Task management tools for Archon MCP Server.
+Task management tools for ArchiveMind MCP Server.
 
 This module provides separate tools for each task operation:
 - create_task: Create a new task

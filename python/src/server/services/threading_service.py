@@ -1,5 +1,5 @@
 """
-Threading Service for Archon
+Threading Service for ArchiveMind
 
 This service provides comprehensive threading patterns for high-performance AI operations
 with adaptive resource management and rate limiting.
@@ -417,10 +417,10 @@ class ThreadingService:
 
         # Thread pools for different workload types
         self.cpu_executor = ThreadPoolExecutor(
-            max_workers=self.config.max_workers, thread_name_prefix="archon-cpu"
+            max_workers=self.config.max_workers, thread_name_prefix="archivemind-cpu"
         )
         self.io_executor = ThreadPoolExecutor(
-            max_workers=self.config.max_workers * 2, thread_name_prefix="archon-io"
+            max_workers=self.config.max_workers * 2, thread_name_prefix="archivemind-io"
         )
 
         self._running = False

@@ -1,11 +1,11 @@
 # Polling Architecture Documentation
 
 ## Overview
-Archon V2 uses HTTP polling instead of WebSockets for real-time updates. This simplifies the architecture, reduces complexity, and improves maintainability while providing adequate responsiveness for project management tasks.
+Archivemind V2 uses HTTP polling instead of WebSockets for real-time updates. This simplifies the architecture, reduces complexity, and improves maintainability while providing adequate responsiveness for project management tasks.
 
 ## Core Components
 
-### 1. usePolling Hook (`archon-ui-main/src/hooks/usePolling.ts`)
+### 1. usePolling Hook (`Archivemind-ui-main/src/hooks/usePolling.ts`)
 Generic polling hook that manages periodic data fetching with smart optimizations.
 
 **Key Features:**
@@ -26,7 +26,7 @@ const { data, isLoading, error, refetch } = usePolling('/api/projects', {
 ### 2. Specialized Progress Services
 Individual services handle specific progress tracking needs:
 
-**CrawlProgressService (`archon-ui-main/src/services/crawlProgressService.ts`)**
+**CrawlProgressService (`Archivemind-ui-main/src/services/crawlProgressService.ts`)**
 - Tracks website crawling operations
 - Maps backend status to UI-friendly format
 - Includes in-flight request guard to prevent overlapping fetches

@@ -9,7 +9,7 @@ import Admonition from '@theme/Admonition';
 
 # API Reference
 
-Archon provides a comprehensive REST API built with FastAPI for knowledge management, document processing, and project automation. This reference covers all endpoints with detailed examples, request/response schemas, and integration patterns.
+Archivemind provides a comprehensive REST API built with FastAPI for knowledge management, document processing, and project automation. This reference covers all endpoints with detailed examples, request/response schemas, and integration patterns.
 
 ## 🌐 Base URL & Authentication
 
@@ -23,7 +23,7 @@ Archon provides a comprehensive REST API built with FastAPI for knowledge manage
 
 ## 🏗️ Modular API Architecture
 
-Archon uses a modular FastAPI architecture with separate routers for different functionalities:
+Archivemind uses a modular FastAPI architecture with separate routers for different functionalities:
 
 - **`knowledge_api.py`**: Knowledge items, web crawling, and document management 
 - **`mcp_api.py`**: MCP server control and Socket.IO communications 
@@ -177,7 +177,7 @@ curl -X DELETE "http://localhost:8080/api/knowledge-items/docs.python.org" \
 
 Initiate intelligent web crawling for a URL with automatic content type detection and real-time progress tracking.
 
-Archon automatically detects the content type and applies the appropriate crawling strategy:
+Archivemind automatically detects the content type and applies the appropriate crawling strategy:
 - **Sitemap URLs** (ending in `sitemap.xml`): Extracts and crawls all URLs from the sitemap
 - **Text Files** (`.txt` files): Downloads and processes the file directly  
 - **Regular Webpages**: Performs recursive crawling following internal links
@@ -545,7 +545,7 @@ Retrieve current MCP Docker container status and health information.
 {
   "status": "running",
   "container_id": "a1b2c3d4e5f6",
-  "container_name": "Archon-MCP",
+  "container_name": "Archivemind-MCP",
   "uptime": 3600,
   "start_time": "2024-01-15T09:44:30Z",
   "health": {
@@ -563,7 +563,7 @@ Retrieve current MCP Docker container status and health information.
 Start the MCP Docker container.
 
 <Admonition type="info" title="Container Management">
-The MCP server runs as a Docker container named `Archon-MCP`. Ensure Docker is running and the container exists (created by docker-compose).
+The MCP server runs as a Docker container named `Archivemind-MCP`. Ensure Docker is running and the container exists (created by docker-compose).
 </Admonition>
 
 #### Example Response
@@ -763,7 +763,7 @@ Health check for MCP API module.
 ## 📋 Project Management API
 
 <Admonition type="info" title="Project Structure">
-Projects in Archon use JSONB fields for flexible document storage:
+Projects in Archivemind use JSONB fields for flexible document storage:
 - `prd`: Product Requirements Document
 - `docs`: Array of project documents
 - `features`: Array of feature specifications
@@ -793,9 +793,9 @@ None - returns all projects.
 [
   {
     "id": "550e8400-e29b-41d4-a716-446655440000",
-    "title": "Archon Documentation",
+    "title": "Archivemind Documentation",
     "description": "Comprehensive API documentation project",
-    "github_repo": "https://github.com/user/archon",
+    "github_repo": "https://github.com/user/Archivemind",
     "prd": {
       "overview": "Documentation project",
       "goals": ["Complete API docs", "Add examples"]
@@ -891,8 +891,8 @@ Get detailed information about a specific project.
   "success": true,
   "project": {
     "id": "550e8400-e29b-41d4-a716-446655440000",
-    "title": "Archon Documentation",
-    "github_repo": "https://github.com/user/archon",
+    "title": "Archivemind Documentation",
+    "github_repo": "https://github.com/user/Archivemind",
     "prd": {
       "overview": "Documentation project",
       "goals": ["Complete API docs", "Add examples"]
@@ -1014,7 +1014,7 @@ Projects API health check.
 **Socket.IO Connection** (Root namespace `/`)
 
 <Admonition type="info" title="Simplified 2025 Socket.IO Pattern">
-Archon uses the simplified Socket.IO pattern with direct event handlers on the root namespace. No complex namespaces or classes are used for better performance and maintainability.
+Archivemind uses the simplified Socket.IO pattern with direct event handlers on the root namespace. No complex namespaces or classes are used for better performance and maintainability.
 </Admonition>
 
 #### Connection Example
@@ -1026,7 +1026,7 @@ import { io } from 'socket.io-client';
 const socket = io('http://localhost:8080');
 
 socket.on('connect', () => {
-  console.log('Connected to Archon Socket.IO server');
+  console.log('Connected to Archivemind Socket.IO server');
   
   // Join project room for updates
   socket.emit('join_project', { project_id: 'your-project-id' });
@@ -1762,7 +1762,7 @@ System health and status check.
 ```json
 {
   "status": "healthy",
-  "service": "archon-backend",
+  "service": "Archivemind-backend",
   "timestamp": "2024-01-15T10:45:00Z"
 }
 ```
@@ -1853,13 +1853,13 @@ import requests
 import json
 from typing import List, Dict, Any
 
-class ArchonClient:
+class ArchivemindClient:
     def __init__(self, base_url: str = "http://localhost:8080"):
         self.base_url = base_url
         self.session = requests.Session()
     
     def upload_document(self, file_path: str, knowledge_type: str, tags: List[str] = None) -> Dict[str, Any]:
-        """Upload a document to Archon"""
+        """Upload a document to Archivemind"""
         with open(file_path, 'rb') as f:
             files = {'file': f}
             data = {
@@ -1894,7 +1894,7 @@ class ArchonClient:
         return response.json()
 
 # Usage example
-client = ArchonClient()
+client = ArchivemindClient()
 
 # Upload a document
 result = client.upload_document(
@@ -1924,7 +1924,7 @@ print(f"Found {len(results['results'])} relevant documents")
 ### JavaScript/Node.js Example
 
 ```javascript
-class ArchonClient {
+class ArchivemindClient {
   constructor(baseUrl = 'http://localhost:8080') {
     this.baseUrl = baseUrl;
   }
@@ -2017,7 +2017,7 @@ class ArchonClient {
 }
 
 // Usage example
-const client = new ArchonClient();
+const client = new ArchivemindClient();
 
 // Start smart crawling
 client.startCrawl('https://docs.python.org/3/tutorial/', 'technical', ['python', 'tutorial'], 7)

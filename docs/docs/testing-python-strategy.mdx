@@ -5,7 +5,7 @@ sidebar_position: 9
 
 # Python Testing Strategy with pytest
 
-This document outlines Archon's Python testing strategy for our multi-container architecture, emphasizing simplicity and effectiveness.
+This document outlines Archivemind's Python testing strategy for our multi-container architecture, emphasizing simplicity and effectiveness.
 
 ## 🎯 Testing Philosophy
 
@@ -260,8 +260,8 @@ async def server_client():
 @pytest.fixture
 async def mcp_server():
     """Mock MCP server for testing tools."""
-    from src.mcp.mcp_server import ArchonMCPServer
-    server = ArchonMCPServer()
+    from src.mcp.mcp_server import ArchivemindMCPServer
+    server = ArchivemindMCPServer()
     # Mock dependencies
     server.supabase_client = AsyncMock()
     server.supabase_client.from_.return_value.select.return_value.execute.return_value.data = []

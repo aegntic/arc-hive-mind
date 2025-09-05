@@ -1,4 +1,4 @@
-# Archon Makefile - Simple, Secure, Cross-Platform
+# Archivemind Makefile - Simple, Secure, Cross-Platform
 SHELL := /bin/bash
 .SHELLFLAGS := -ec
 
@@ -8,7 +8,7 @@ COMPOSE ?= $(shell docker compose version >/dev/null 2>&1 && echo "docker compos
 .PHONY: help dev dev-docker stop test test-fe test-be lint lint-fe lint-be clean install check
 
 help:
-	@echo "Archon Development Commands"
+	@echo "Archivemind Development Commands"
 	@echo "==========================="
 	@echo "  make dev        - Backend in Docker, frontend local (recommended)"
 	@echo "  make dev-docker - Everything in Docker"
@@ -26,7 +26,7 @@ help:
 # Install dependencies
 install:
 	@echo "Installing dependencies..."
-	@cd archon-ui-main && npm install
+	@cd archivemind-ui-main && npm install
 	@cd python && uv sync --group all --group dev
 	@echo "✓ Dependencies installed"
 
@@ -47,11 +47,11 @@ dev: check
 	@echo "Backend: Docker | Frontend: Local with hot reload"
 	@$(COMPOSE) --profile backend up -d --build
 	@set -a; [ -f .env ] && . ./.env; set +a; \
-	echo "Backend running at http://$${HOST:-localhost}:$${ARCHON_SERVER_PORT:-8181}"
+	echo "Backend running at http://$${HOST:-localhost}:$${ARCHIVEMIND_SERVER_PORT:-8181}"
 	@echo "Starting frontend..."
-	@cd archon-ui-main && \
-	VITE_ARCHON_SERVER_PORT=$${ARCHON_SERVER_PORT:-8181} \
-	VITE_ARCHON_SERVER_HOST=$${HOST:-} \
+	@cd archivemind-ui-main && \
+	VITE_ARCHIVEMIND_SERVER_PORT=$${ARCHIVEMIND_SERVER_PORT:-8181} \
+	VITE_ARCHIVEMIND_SERVER_HOST=$${HOST:-} \
 	npm run dev
 
 # Full Docker development
@@ -74,7 +74,7 @@ test: test-fe test-be
 # Run frontend tests
 test-fe:
 	@echo "Running frontend tests..."
-	@cd archon-ui-main && npm test
+	@cd archivemind-ui-main && npm test
 
 # Run backend tests
 test-be:
@@ -87,7 +87,7 @@ lint: lint-fe lint-be
 # Run frontend linter
 lint-fe:
 	@echo "Linting frontend..."
-	@cd archon-ui-main && npm run lint
+	@cd archivemind-ui-main && npm run lint
 
 # Run backend linter
 lint-be:

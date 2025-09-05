@@ -1,5 +1,5 @@
 """
-Projects API endpoints for Archon
+Projects API endpoints for ArchiveMind
 
 Handles:
 - Project management (CRUD operations)

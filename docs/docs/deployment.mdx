@@ -1,6 +1,6 @@
 ---
 title: Deployment
-description: Quick start guide for running Archon
+description: Quick start guide for running Archivemind
 sidebar_position: 10
 ---
 
@@ -23,7 +23,7 @@ import Admonition from '@theme/Admonition';
 ```bash
 # Clone repository
 git clone <repository-url>
-cd archon
+cd Archivemind
 
 # Create environment file
 cp .env.example .env
@@ -57,7 +57,7 @@ docker-compose ps
 ## Hot Module Reload (HMR)
 
 <Admonition type="tip" title="Built-in Hot Reload">
-Archon automatically includes Hot Module Reload for both Python server and React UI. Code changes are reflected immediately without container rebuilds.
+Archivemind automatically includes Hot Module Reload for both Python server and React UI. Code changes are reflected immediately without container rebuilds.
 </Admonition>
 
 ### What Changes Without Rebuild
@@ -116,7 +116,7 @@ Archon automatically includes Hot Module Reload for both Python server and React
 
 1. **Monitor Logs**: Watch for reload messages
    ```bash
-   docker logs -f Archon-Server
+   docker logs -f Archivemind-Server
    ```
 
 2. **Handle Disconnects**: The UI shows a disconnect screen during server reload
@@ -126,7 +126,7 @@ Archon automatically includes Hot Module Reload for both Python server and React
 <Admonition type="warning" title="MCP Service Note">
 The MCP service doesn't support hot reload. Restart manually after changes:
 ```bash
-docker-compose restart archon-mcp
+docker-compose restart Archivemind-mcp
 ```
 </Admonition>
 
@@ -140,11 +140,11 @@ graph LR
     end
     
     subgraph "Docker Containers"
-        Frontend[archon-frontend<br/>React UI]
-        API[Archon-Server<br/>FastAPI + Socket.IO]
-        MCP[archon-mcp<br/>MCP Server]
-        Agents[archon-agents<br/>AI Processing]
-        Docs[archon-docs<br/>Documentation]
+        Frontend[Archivemind-frontend<br/>React UI]
+        API[Archivemind-Server<br/>FastAPI + Socket.IO]
+        MCP[Archivemind-mcp<br/>MCP Server]
+        Agents[Archivemind-agents<br/>AI Processing]
+        Docs[Archivemind-docs<br/>Documentation]
     end
     
     subgraph "Cloud Services"
@@ -184,7 +184,7 @@ docker-compose down
 docker-compose logs -f
 
 # Restart a service
-docker-compose restart archon-frontend
+docker-compose restart Archivemind-frontend
 ```
 
 </TabItem>
@@ -195,9 +195,9 @@ docker-compose restart archon-frontend
 docker ps
 
 # View service logs
-docker logs archon-server
-docker logs archon-mcp
-docker logs archon-agents
+docker logs Archivemind-server
+docker logs Archivemind-mcp
+docker logs Archivemind-agents
 
 # Rebuild after changes
 docker-compose build
@@ -213,7 +213,7 @@ docker-compose up -d --build
 
 ## Advanced Configuration
 
-<Admonition type="info" title="Scaling Archon">
+<Admonition type="info" title="Scaling Archivemind">
 For team deployments, consider:
 - Using a reverse proxy (nginx/Caddy) for multiple users
 - Setting up SSL certificates for secure connections
@@ -276,7 +276,7 @@ docker system df
 ## Next Steps
 
 <Admonition type="success" title="Ready to Go!">
-Your Archon instance is now running. Next:
+Your Archivemind instance is now running. Next:
 
 1. **Set up API keys** in Settings
 2. **Configure MCP** for AI agents

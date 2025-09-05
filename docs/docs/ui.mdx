@@ -20,7 +20,7 @@ src/
 │   ├── knowledge-base/
 │   │   └── KnowledgeTable.tsx
 │   ├── layouts/
-│   │   ├── ArchonChatPanel.tsx
+│   │   ├── ArchivemindChatPanel.tsx
 │   │   ├── MainLayout.tsx
 │   │   └── SideNavigation.tsx
 │   ├── mcp/
@@ -97,7 +97,7 @@ src/
 ## Running Locally
 
 ```bash
-cd archon-ui-main
+cd Archivemind-ui-main
 npm install
 npm run dev
 ```
@@ -134,15 +134,15 @@ flowchart LR
 
 See [Getting Started](getting-started) for details.
 
-# Archon UI - Knowledge Engine Web Interface
+# Archivemind UI - Knowledge Engine Web Interface
 
-A modern React-based web interface for the Archon Knowledge Engine MCP Server. Built with TypeScript, Vite, and Tailwind CSS.
+A modern React-based web interface for the Archivemind Knowledge Engine MCP Server. Built with TypeScript, Vite, and Tailwind CSS.
 
 ## 🎨 UI Overview
 
-Archon UI provides a comprehensive dashboard for managing your AI's knowledge base:
+Archivemind UI provides a comprehensive dashboard for managing your AI's knowledge base:
 
-![UI Architecture](https://via.placeholder.com/800x400?text=Archon+UI+Architecture)
+![UI Architecture](https://via.placeholder.com/800x400?text=Archivemind+UI+Architecture)
 
 ### Key Features
 
@@ -216,7 +216,7 @@ Comprehensive configuration management with organized sections.
   - Agentic RAG (code extraction) toggle
   - Reranking toggle
   - Model selection
-- **Archon Unit Tests** (Collapsible):
+- **Archivemind Unit Tests** (Collapsible):
   - Python MCP tests with real-time output
   - React UI tests with local execution
   - Pretty/Raw view modes
@@ -661,7 +661,7 @@ ws.addMessageHandler('crawl_progress', (message) => {
 ```
 
 **2. AI Agent Communication**
-- **Example**: ArchonChatPanel
+- **Example**: ArchivemindChatPanel
 - **Why**: Stream AI responses as they generate
 - **Pattern**: Chat session room
 ```typescript
@@ -825,5 +825,5 @@ Based on code analysis, these components need performance improvements:
 #### Medium Priority
 4. **APIKeysSection** - Dynamic list with multiple input fields
 5. **ToolTestingPanel** - Complex parameter inputs
-6. **ArchonChatPanel** - Consider virtualization for long chat histories
+6. **ArchivemindChatPanel** - Consider virtualization for long chat histories
 
