@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="./archon-ui-main/public/archon-main-graphic.png" alt="Archon Main Graphic" width="853" height="422">
-</p>
+
 
 <p align="center">
   <em>Power up your AI coding assistants with your own custom knowledge base and task management as an MCP server</em>
@@ -16,7 +14,7 @@
 
 ---
 
-## 🎯 What is Archon?
+## 🎯 What is unltd?
 
 > Archon is currently in beta! Expect things to not work 100%, and please feel free to share any feedback and contribute with fixes/new features! Thank you to everyone for all the excitement we have for Archon already, as well as the bug reports, PRs, and discussions. It's a lot for our small team to get through but we're committed to addressing everything and making Archon into the best tool it possibly can be!
 
@@ -28,17 +26,9 @@ Archon is the **command center** for AI coding assistants. For you, it's a sleek
 - **Real-time updates** as you add new content and collaborate with your coding assistant on tasks
 - **Much more** coming soon to build Archon into an integrated environment for all context engineering
 
-This new vision for Archon replaces the old one (the agenteer). Archon used to be the AI agent that builds other agents, and now you can use Archon to do that and more.
+This new vision for UNLTD replaces the old one (the archive-mind). Archon used to be the AI agent that builds other agents, and now you can use Archon to do that and more.
 
 > It doesn't matter what you're building or if it's a new/existing codebase - Archon's knowledge and task management capabilities will improve the output of **any** AI driven coding.
-
-## 🔗 Important Links
-
-- **[GitHub Discussions](https://github.com/coleam00/Archon/discussions)** - Join the conversation and share ideas about Archon
-- **[Contributing Guide](CONTRIBUTING.md)** - How to get involved and contribute to Archon
-- **[Introduction Video](https://youtu.be/8pRc_s2VQIo)** - Getting started guide and vision for Archon
-- **[Archon Kanban Board](https://github.com/users/coleam00/projects/1)** - Where maintainers are managing issues/features
-- **[Dynamous AI Mastery](https://dynamous.ai)** - The birthplace of Archon - come join a vibrant community of other early AI adopters all helping each other transform their careers and businesses!
 
 ## Quick Start
 
@@ -54,7 +44,7 @@ This new vision for Archon replaces the old one (the agenteer). Archon used to b
 
 1. **Clone Repository**:
    ```bash
-   git clone -b stable https://github.com/coleam00/archon.git
+   git clone -b stable https://github.com/aegntic/archive-mind.git
    ```
    ```bash
    cd archon
